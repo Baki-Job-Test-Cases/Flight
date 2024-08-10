@@ -62,9 +62,9 @@ export default function Header() {
             <nav
                 role="navigation"
                 aria-label="Main navigation"
-                className="mx-2 flex py-4 md:mx-5"
+                className="flex py-4"
             >
-                <div className="mr-auto flex items-center font-bold uppercase">
+                <div className="mr-auto flex items-center text-xl font-bold uppercase">
                     <div className="relative mr-2 size-8 overflow-hidden rounded-full bg-purple">
                         <RiPlaneLine
                             className="absolute -left-1 -top-px size-full rotate-90 scale-110"

@@ -83,3 +83,15 @@ export function prismaExclude<T extends Entity, K extends Keys<T>>(
     }
     return result;
 }
+
+export const stringifyObjectValues = (
+    payload: Record<string, any>,
+): Record<string, string> =>
+    Object.entries(payload).reduce(
+        (acc, [key, value]) => {
+            acc[key] = value.toString();
+
+            return acc;
+        },
+        {} as Record<string, string>,
+    );

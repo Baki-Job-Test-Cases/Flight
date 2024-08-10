@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
 import { flightFiltersSchema } from '../schemas';
+import { stringifyObjectValues } from '../utils';
 import type { Flight, FlightFilters, SearchFlightResponse } from '../types';
 
 export class FlightController {
@@ -25,14 +26,8 @@ export class FlightController {
                     error: 'Enter valid query data ..!',
                 });
 
-            const transformedFilters: Record<string, string> = {};
-
-            for (const [key, value] of Object.entries(validatedFilters.data)) {
-                transformedFilters[key] = value.toString();
-            }
-
             const flightResponse = await fetch(
-                `${this.baseUrl}/flights?${new URLSearchParams(transformedFilters)}`,
+                `${this.baseUrl}/flights?${new URLSearchParams(stringifyObjectValues(validatedFilters.data))}`,
                 {
                     method: 'GET',
                     headers: {

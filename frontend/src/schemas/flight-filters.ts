@@ -12,7 +12,7 @@ export const flightFiltersSchema = z
         flightName: z.string(),
         flightDirection: z.enum(['A', 'D']),
         airline: z.string().max(3),
-        airlineCode: z.number(),
+        airlineCode: z.coerce.number(),
         includedelays: z.coerce.boolean(),
         page: z.coerce.number().max(499),
         sort: z.string(), //check
