@@ -1,19 +1,17 @@
 import { type Request, type Response } from 'express';
+import * as z from 'zod';
+import { getFlightQuery, getFlightsQuery } from '../queries';
 import { flightFiltersSchema } from '../schemas';
-import { stringifyObjectValues } from '../utils';
-import type { Flight, FlightFilters, SearchFlightResponse } from '../types';
+import type {
+    FlightFilters,
+    GetFlightResponse,
+    GetFlightsResponse,
+} from '../types';
 
 export class FlightController {
-    protected baseUrl: string = 'https://api.schiphol.nl/public-flights';
-
-    constructor(
-        private apiId: string,
-        private apiKey: string,
-    ) {}
-
-    searchFlight = async (
+    getFlights = async (
         request: Request<{}, {}, {}, FlightFilters>,
-        response: Response<SearchFlightResponse>,
+        response: Response<GetFlightsResponse>,
     ) => {
         try {
             const validatedFilters = flightFiltersSchema.safeParse(
@@ -22,39 +20,46 @@ export class FlightController {
 
             if (!validatedFilters.success)
                 return response.json({
-                    search: false,
+                    success: false,
                     error: 'Enter valid query data ..!',
                 });
 
-            const flightResponse = await fetch(
-                `${this.baseUrl}/flights?${new URLSearchParams(stringifyObjectValues(validatedFilters.data))}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        resourceversion: 'v4',
-                        app_id: this.apiId,
-                        app_key: this.apiKey,
-                        'Content-Type': 'application/json',
-                    },
-                },
-            );
-
-            if (!flightResponse.ok) throw new Error();
-            if (flightResponse.status === 204)
-                return response.json({
-                    search: true,
-                    flights: [],
-                });
-
-            const flights = (await flightResponse.json()) as Flight[];
+            const flights = await getFlightsQuery(validatedFilters.data);
 
             return response.json({
-                search: true,
+                success: true,
                 flights,
             });
         } catch (error) {
             return response.json({
-                search: false,
+                success: false,
+                error: 'Something went wrong..!',
+            });
+        }
+    };
+
+    getFlight = async (
+        request: Request<{ id: string }>,
+        response: Response<GetFlightResponse>,
+    ) => {
+        try {
+            const validatedId = z.coerce.number().safeParse(request.params.id);
+
+            if (!validatedId.success)
+                return response.json({
+                    success: false,
+                    error: 'Enter valid param data(id) ..!',
+                });
+
+            const flight = await getFlightQuery(validatedId.data);
+
+            return response.json({
+                success: true,
+                flight,
+            });
+        } catch (error) {
+            return response.json({
+                success: false,
                 error: 'Something went wrong..!',
             });
         }

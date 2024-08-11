@@ -5,3 +5,4 @@ export * from './user-without-password.type';
 export * from './token-dto.interface';
 export * from './flight-filters.type';
 export * from './flight.interface';
+export * from './destination.interface';

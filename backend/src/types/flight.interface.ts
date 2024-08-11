@@ -1,3 +1,5 @@
+import type { Destination } from './destination.interface';
+
 interface AircraftTypeType {
     iataMain?: string;
     iataSub?: string;

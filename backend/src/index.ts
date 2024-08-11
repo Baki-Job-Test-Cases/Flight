@@ -5,7 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
-import { authRoute, flightRoute } from './routes';
+import { authRoute, destinationRoute, flightRoute } from './routes';
 import { UserWithoutPassword } from './types';
 
 declare global {
@@ -33,21 +33,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
-    cors({
-        origin: function (origin, callback) {
-            if (process.env.CORS_ORIGIN === origin) {
-                callback(null, true);
-            } else {
-                callback(Error('Blocked By Cors'));
-            }
-        },
-        credentials: true,
-    }),
+    cors(),
+    //     {
+    //     origin: function (origin, callback) {
+    //         if (process.env.CORS_ORIGIN === origin) {
+    //             callback(null, true);
+    //         } else {
+    //             callback(Error('Blocked By Cors'));
+    //         }
+    //     },
+    //     credentials: true,
+    // }
 );
 app.use(limiter);
 
 app.use('/', authRoute);
-app.use('/flight', flightRoute);
+app.use('/flights', flightRoute);
+app.use('/destinations', destinationRoute);
 
 app.listen(process.env.API_PORT || 8080, () => {
     console.log(`Server work at port ${process.env.API_PORT}`);
