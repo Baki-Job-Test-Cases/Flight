@@ -6,3 +6,4 @@ export * from './token-dto.interface';
 export * from './flight-filters.type';
 export * from './flight.interface';
 export * from './destination.interface';
+export * from './airline.interface';

@@ -5,7 +5,12 @@ import cors from 'cors';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
-import { authRoute, destinationRoute, flightRoute } from './routes';
+import {
+    airlineRoute,
+    authRoute,
+    destinationRoute,
+    flightRoute,
+} from './routes';
 import { UserWithoutPassword } from './types';
 
 declare global {
@@ -50,6 +55,7 @@ app.use(limiter);
 app.use('/', authRoute);
 app.use('/flights', flightRoute);
 app.use('/destinations', destinationRoute);
+app.use('/airlines', airlineRoute);
 
 app.listen(process.env.API_PORT || 8080, () => {
     console.log(`Server work at port ${process.env.API_PORT}`);

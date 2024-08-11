@@ -1,3 +1,4 @@
+import type { Airline } from './airline.interface';
 import type { Destination } from './destination.interface';
 import type { Flight } from './flight.interface';
 import type { RejectWithReason } from './reject-with-reason.type';
@@ -71,6 +72,22 @@ export type GetDestinationResponse = GeneralResponse<
     | {
           success: true;
           destination: Destination;
+      }
+    | RejectWithReason<'success'>
+>;
+
+export type GetAirlinesResponse = GeneralResponse<
+    | {
+          success: true;
+          airlines: Airline[];
+      }
+    | RejectWithReason<'success'>
+>;
+
+export type GetAirlineResponse = GeneralResponse<
+    | {
+          success: true;
+          airline: Airline;
       }
     | RejectWithReason<'success'>
 >;

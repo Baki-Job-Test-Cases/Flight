@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { stringifyObjectValues } from '../utils';
-import type { Destination, Flight, FlightFilters } from '../types';
+import type { Airline, Destination, Flight, FlightFilters } from '../types';
 
 const BASE_URL = 'https://api.schiphol.nl/public-flights';
 
@@ -30,13 +30,13 @@ export const getFlightsQuery = async (
     return status === 204 ? [] : flights;
 };
 
-export const getFlightQuery = async (id: number): Promise<Flight> => {
+export const getFlightQuery = async (id: string): Promise<Flight> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
         !process.env.SCHIPHOL_FLIGHT_APP_KEY
     )
         throw new Error('Missing Flight Api Credentials...');
-    console.log(`${BASE_URL}/flights/${id}`);
+
     const { data: flight, status } = await axios.get<Flight>(
         `${BASE_URL}/flights/${id}`,
         {
@@ -100,4 +100,49 @@ export const getDestinationQuery = async (
     );
 
     return status === 204 ? {} : destination;
+};
+
+export const getAirlinesQuery = async (page: number): Promise<Airline[]> => {
+    if (
+        !process.env.SCHIPHOL_FLIGHT_APP_ID ||
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+    )
+        throw new Error('Missing Flight Api Credentials...');
+
+    const {
+        data: { airlines },
+        status,
+    } = await axios.get<{ airlines: Airline[] }>(
+        `${BASE_URL}/airlines?${new URLSearchParams(stringifyObjectValues({ page }))}`,
+        {
+            headers: {
+                resourceversion: 'v4',
+                app_id: process.env.SCHIPHOL_FLIGHT_APP_ID,
+                app_key: process.env.SCHIPHOL_FLIGHT_APP_KEY,
+            },
+        },
+    );
+
+    return status === 204 ? [] : airlines;
+};
+
+export const getAirlineQuery = async (code: string): Promise<Airline> => {
+    if (
+        !process.env.SCHIPHOL_FLIGHT_APP_ID ||
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+    )
+        throw new Error('Missing Flight Api Credentials...');
+
+    const { data: airline, status } = await axios.get<Airline>(
+        `${BASE_URL}/airlines/${code}`,
+        {
+            headers: {
+                resourceversion: 'v4',
+                app_id: process.env.SCHIPHOL_FLIGHT_APP_ID,
+                app_key: process.env.SCHIPHOL_FLIGHT_APP_KEY,
+            },
+        },
+    );
+
+    return status === 204 ? {} : airline;
 };

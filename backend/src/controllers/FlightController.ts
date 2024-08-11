@@ -1,6 +1,11 @@
 import { type Request, type Response } from 'express';
 import * as z from 'zod';
-import { getFlightQuery, getFlightsQuery } from '../queries';
+import {
+    getAirlineQuery,
+    getDestinationQuery,
+    getFlightQuery,
+    getFlightsQuery,
+} from '../queries';
 import { flightFiltersSchema } from '../schemas';
 import type {
     FlightFilters,
@@ -43,7 +48,7 @@ export class FlightController {
         response: Response<GetFlightResponse>,
     ) => {
         try {
-            const validatedId = z.coerce.number().safeParse(request.params.id);
+            const validatedId = z.string().safeParse(request.params.id);
 
             if (!validatedId.success)
                 return response.json({
@@ -52,6 +57,27 @@ export class FlightController {
                 });
 
             const flight = await getFlightQuery(validatedId.data);
+
+            if (flight.prefixIATA || flight.prefixICAO) {
+                const airline = await getAirlineQuery(
+                    flight.prefixIATA || flight.prefixICAO || '',
+                );
+
+                flight.airline = airline;
+            }
+
+            if (
+                flight.route?.destinations &&
+                flight.route.destinations.length > 0
+            ) {
+                const destinations = await Promise.all(
+                    flight.route.destinations.map((iata) =>
+                        getDestinationQuery(iata),
+                    ),
+                );
+
+                flight.destinations = destinations;
+            }
 
             return response.json({
                 success: true,

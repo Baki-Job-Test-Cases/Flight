@@ -1,3 +1,4 @@
+import type { Airline } from './airline.interface';
 import type { Destination } from './destination.interface';
 
 interface AircraftTypeType {
@@ -101,4 +102,6 @@ export interface Flight {
     terminal?: number;
     transferPositions?: TransferPositionsType;
     schemaVersion?: string;
+    airline?: Airline;
+    destinations?: Destination[];
 }
