@@ -58,27 +58,6 @@ export class FlightController {
 
             const flight = await getFlightQuery(validatedId.data);
 
-            if (flight.prefixIATA || flight.prefixICAO) {
-                const airline = await getAirlineQuery(
-                    flight.prefixIATA || flight.prefixICAO || '',
-                );
-
-                flight.airline = airline;
-            }
-
-            if (
-                flight.route?.destinations &&
-                flight.route.destinations.length > 0
-            ) {
-                const destinations = await Promise.all(
-                    flight.route.destinations.map((iata) =>
-                        getDestinationQuery(iata),
-                    ),
-                );
-
-                flight.destinations = destinations;
-            }
-
             return response.json({
                 success: true,
                 flight,

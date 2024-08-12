@@ -1,7 +1,8 @@
 import { Prisma } from '@prisma/client';
 import jwt from 'jsonwebtoken';
+import { getAirlineQuery, getDestinationQuery } from './queries';
 import type { Response } from 'express';
-import type { TokenPayload } from './types';
+import type { Flight, TokenPayload } from './types';
 
 type A<T extends string> = T extends `${infer U}ScalarFieldEnum` ? U : never;
 type Entity = A<keyof typeof Prisma>;
@@ -95,3 +96,21 @@ export const stringifyObjectValues = (
         },
         {} as Record<string, string>,
     );
+
+export const extendFlight = async (flight: Flight): Promise<void> => {
+    if (flight.prefixIATA || flight.prefixICAO) {
+        const airline = await getAirlineQuery(
+            flight.prefixIATA || flight.prefixICAO || '',
+        );
+
+        flight.airline = airline;
+    }
+
+    if (flight.route?.destinations && flight.route.destinations.length > 0) {
+        const destinations = await Promise.all(
+            flight.route.destinations.map((iata) => getDestinationQuery(iata)),
+        );
+
+        flight.destinations = destinations;
+    }
+};
