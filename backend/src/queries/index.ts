@@ -2,22 +2,21 @@ import axios from 'axios';
 import { stringifyObjectValues } from '../utils';
 import type { Airline, Destination, Flight, FlightFilters } from '../types';
 
-const BASE_URL = 'https://api.schiphol.nl/public-flights';
-
 export const getFlightsQuery = async (
     filters: FlightFilters,
-): Promise<Flight[]> => {
+): Promise<Flight[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
     const {
         data: { flights },
         status,
-    } = await axios.get<{ flights: Flight[] }>(
-        `${BASE_URL}/flights?${new URLSearchParams(stringifyObjectValues(filters))}`,
+    } = await axios.get<{ flights?: Flight[] }>(
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/flights?${new URLSearchParams(stringifyObjectValues(filters))}`,
         {
             headers: {
                 resourceversion: 'v4',
@@ -33,12 +32,13 @@ export const getFlightsQuery = async (
 export const getFlightQuery = async (id: string): Promise<Flight> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
     const { data: flight, status } = await axios.get<Flight>(
-        `${BASE_URL}/flights/${id}`,
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/flights/${id}`,
         {
             headers: {
                 resourceversion: 'v4',
@@ -53,10 +53,11 @@ export const getFlightQuery = async (id: string): Promise<Flight> => {
 
 export const getDestinationsQuery = async (
     page: number,
-): Promise<Destination[]> => {
+): Promise<Destination[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
@@ -64,9 +65,9 @@ export const getDestinationsQuery = async (
         data: { destinations },
         status,
     } = await axios.get<{
-        destinations: Destination[];
+        destinations?: Destination[];
     }>(
-        `${BASE_URL}/destinations?${new URLSearchParams(stringifyObjectValues({ page }))}`,
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/destinations?${new URLSearchParams(stringifyObjectValues({ page }))}`,
         {
             headers: {
                 resourceversion: 'v4',
@@ -84,12 +85,13 @@ export const getDestinationQuery = async (
 ): Promise<Destination> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
     const { data: destination, status } = await axios.get<Destination>(
-        `${BASE_URL}/destinations/${iata}`,
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/destinations/${iata}`,
         {
             headers: {
                 resourceversion: 'v4',
@@ -102,18 +104,21 @@ export const getDestinationQuery = async (
     return status === 204 ? {} : destination;
 };
 
-export const getAirlinesQuery = async (page: number): Promise<Airline[]> => {
+export const getAirlinesQuery = async (
+    page: number,
+): Promise<Airline[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
     const {
         data: { airlines },
         status,
-    } = await axios.get<{ airlines: Airline[] }>(
-        `${BASE_URL}/airlines?${new URLSearchParams(stringifyObjectValues({ page }))}`,
+    } = await axios.get<{ airlines?: Airline[] }>(
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/airlines?${new URLSearchParams(stringifyObjectValues({ page }))}`,
         {
             headers: {
                 resourceversion: 'v4',
@@ -129,12 +134,13 @@ export const getAirlinesQuery = async (page: number): Promise<Airline[]> => {
 export const getAirlineQuery = async (code: string): Promise<Airline> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
-        !process.env.SCHIPHOL_FLIGHT_APP_KEY
+        !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
+        !process.env.SCHIPHOL_FLIGHT_BASE_URL
     )
         throw new Error('Missing Flight Api Credentials...');
 
     const { data: airline, status } = await axios.get<Airline>(
-        `${BASE_URL}/airlines/${code}`,
+        `${process.env.SCHIPHOL_FLIGHT_BASE_URL}/airlines/${code}`,
         {
             headers: {
                 resourceversion: 'v4',

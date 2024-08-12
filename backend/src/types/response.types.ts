@@ -47,7 +47,7 @@ export type VerifyResponse = GeneralResponse<
 export type GetFlightsResponse = GeneralResponse<
     | {
           success: true;
-          flights: Flight[];
+          flights?: Flight[];
       }
     | RejectWithReason<'success'>
 >;
@@ -63,7 +63,7 @@ export type GetFlightResponse = GeneralResponse<
 export type GetDestinationsResponse = GeneralResponse<
     | {
           success: true;
-          destinations: Destination[];
+          destinations?: Destination[];
       }
     | RejectWithReason<'success'>
 >;
@@ -79,7 +79,7 @@ export type GetDestinationResponse = GeneralResponse<
 export type GetAirlinesResponse = GeneralResponse<
     | {
           success: true;
-          airlines: Airline[];
+          airlines?: Airline[];
       }
     | RejectWithReason<'success'>
 >;
@@ -90,4 +90,14 @@ export type GetAirlineResponse = GeneralResponse<
           airline: Airline;
       }
     | RejectWithReason<'success'>
+>;
+
+export type AddFlightResponse = GeneralResponse<
+    { add: true } | RejectWithReason<'add'>
+>;
+
+export type GetUserFlightsResponse = GeneralResponse<
+    AuthMiddlewareResponse<
+        { success: true; flights: Flight[] } | RejectWithReason<'success'>
+    >
 >;

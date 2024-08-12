@@ -45,7 +45,11 @@ export class AuthController {
                 validatedForm.data;
 
             const newUser = await db.user.create({
-                data: { ...formWithoutConfirm, password: hashedPassword },
+                data: {
+                    ...formWithoutConfirm,
+                    password: hashedPassword,
+                    flights: [],
+                },
             });
             const { password, ...newUserWithoutUser } = newUser;
 

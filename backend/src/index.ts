@@ -10,6 +10,7 @@ import {
     authRoute,
     destinationRoute,
     flightRoute,
+    userRoute,
 } from './routes';
 import { UserWithoutPassword } from './types';
 
@@ -56,6 +57,7 @@ app.use('/', authRoute);
 app.use('/flights', flightRoute);
 app.use('/destinations', destinationRoute);
 app.use('/airlines', airlineRoute);
+app.use('/user', userRoute);
 
 app.listen(process.env.API_PORT || 8080, () => {
     console.log(`Server work at port ${process.env.API_PORT}`);

@@ -1,9 +1,9 @@
 export interface Destination {
-    city?: 'string';
-    country?: 'string';
-    iata?: 'string';
+    city?: string;
+    country?: string;
+    iata?: string;
     publicName?: {
-        dutch?: 'string';
-        english?: 'string';
+        dutch?: string;
+        english?: string;
     };
 }
