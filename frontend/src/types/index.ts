@@ -5,3 +5,5 @@ export * from './user-interface';
 export * from './flight-filters.type';
 export * from './flight.interface';
 export * from './session.interface';
+export * from './airline.interface';
+export * from './destination.interface';

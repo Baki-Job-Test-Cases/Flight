@@ -15,6 +15,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { stringifyObjectValues } from '@/lib/utils';
 import { flightFiltersSchema } from '@/schemas';
+// import ComboboxDemo from '../test';
 import { Button } from '../ui/button';
 import VisuallyHidden from '../VisuallyHidden';
 import type { SubmitHandler } from 'react-hook-form';
@@ -51,7 +52,7 @@ export default function SearchFlight() {
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="flex items-center">
+                    <div className="flex flex-wrap items-center">
                         <div className="mr-auto">
                             <div className="flex items-center gap-1.5 text-lg">
                                 <RiPlaneLine className="size-6 rotate-90" />
@@ -113,6 +114,7 @@ export default function SearchFlight() {
                     </Button>
                 </form>
             </Form>
+            {/* <ComboboxDemo /> */}
         </section>
     );
 }

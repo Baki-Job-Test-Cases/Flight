@@ -1,6 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { authApi } from './apis/authApi';
+import { airlineApi } from './apis/airline';
+import { authApi } from './apis/auth';
+import { destinationApi } from './apis/destination';
+import { flightApi } from './apis/flight';
+import { userApi } from './apis/user';
 import { rateLimitMiddleware } from './middlewares/rateLimit';
 import { sessionSlice } from './slices/session';
 
@@ -8,10 +12,18 @@ const store = configureStore({
     reducer: {
         [sessionSlice.name]: sessionSlice.reducer,
         [authApi.reducerPath]: authApi.reducer,
+        [flightApi.reducerPath]: flightApi.reducer,
+        [destinationApi.reducerPath]: destinationApi.reducer,
+        [airlineApi.reducerPath]: airlineApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
     },
     middleware(getDefaultMiddleware) {
         return getDefaultMiddleware()
             .concat(authApi.middleware)
+            .concat(flightApi.middleware)
+            .concat(destinationApi.middleware)
+            .concat(airlineApi.middleware)
+            .concat(userApi.middleware)
             .concat(rateLimitMiddleware);
     },
 });
@@ -24,10 +36,15 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export { store };
-export {
+export const {
     useSignInMutation,
     useSignUpMutation,
     useSignOutMutation,
     useVerifyMutation,
-} from './apis/authApi';
+} = authApi;
+export const { useLazyGetFlightQuery, useLazyGetFlightsQuery } = flightApi;
+export const { useLazyGetDestinationQuery, useLazyGetDestinationsQuery } =
+    destinationApi;
+export const { useLazyGetAirlineQuery, useLazyGetAirlinesQuery } = airlineApi;
+export const { useAddFlightMutation, useGetUserFlightsQuery } = userApi;
 export const { update } = sessionSlice.actions;

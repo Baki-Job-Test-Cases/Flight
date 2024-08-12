@@ -1,3 +1,5 @@
+import type { Airline } from './airline.interface';
+import type { Destination } from './destination.interface';
 import type { Flight } from './flight.interface';
 import type { RejectWithReason } from './reject-with-reason.type';
 import type { User } from './user-interface';
@@ -34,9 +36,52 @@ export type VerifyResponse = AuthResponse<
     | RejectWithReason<'verify'>
 >;
 
-export type SearchFlightResponse =
+export type AddFlightResponse = AuthResponse<
+    { add: true } | RejectWithReason<'add'>
+>;
+
+export type GetUserFlightsResponse = AuthResponse<
+    { success: true; flights: Flight[] } | RejectWithReason<'success'>
+>;
+
+export type GetFlightsResponse =
     | {
-          search: true;
+          success: true;
           flights?: Flight[];
       }
-    | RejectWithReason<'search'>;
+    | RejectWithReason<'success'>;
+
+export type GetFlightResponse =
+    | {
+          success: true;
+          flight: Flight;
+      }
+    | RejectWithReason<'success'>;
+
+export type GetDestinationsResponse =
+    | {
+          success: true;
+          destinations?: Destination[];
+      }
+    | RejectWithReason<'success'>;
+
+export type GetDestinationResponse =
+    | {
+          success: true;
+          destination: Destination;
+      }
+    | RejectWithReason<'success'>;
+
+export type GetAirlinesResponse =
+    | {
+          success: true;
+          airlines?: Airline[];
+      }
+    | RejectWithReason<'success'>;
+
+export type GetAirlineResponse =
+    | {
+          success: true;
+          airline: Airline;
+      }
+    | RejectWithReason<'success'>;
