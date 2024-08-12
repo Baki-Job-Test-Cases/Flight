@@ -16,8 +16,12 @@ export const flightFiltersSchema = z
         includedelays: z.coerce.boolean(),
         page: z.coerce.number().max(499),
         sort: z.string(), //check
-        fromDateTime: z.string().datetime(),
-        toDateTime: z.string().datetime(),
+        fromDateTime: z.coerce
+            .date()
+            .transform((val) => val.toISOString().slice(0, 19)),
+        toDateTime: z.coerce
+            .date()
+            .transform((val) => val.toISOString().slice(0, 19)),
         searchDateTimeField: z.enum([
             'estimatedLandingTime',
             'actualLandingTime',

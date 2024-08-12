@@ -18,7 +18,9 @@ const store = configureStore({
         [userApi.reducerPath]: userApi.reducer,
     },
     middleware(getDefaultMiddleware) {
-        return getDefaultMiddleware()
+        return getDefaultMiddleware({
+            serializableCheck: false,
+        })
             .concat(authApi.middleware)
             .concat(flightApi.middleware)
             .concat(destinationApi.middleware)
@@ -36,15 +38,10 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export { store };
-export const {
-    useSignInMutation,
-    useSignUpMutation,
-    useSignOutMutation,
-    useVerifyMutation,
-} = authApi;
+export const { useSignInMutation, useSignUpMutation, useSignOutMutation, useVerifyMutation } =
+    authApi;
 export const { useLazyGetFlightQuery, useLazyGetFlightsQuery } = flightApi;
-export const { useLazyGetDestinationQuery, useLazyGetDestinationsQuery } =
-    destinationApi;
+export const { useLazyGetDestinationQuery, useLazyGetDestinationsQuery } = destinationApi;
 export const { useLazyGetAirlineQuery, useLazyGetAirlinesQuery } = airlineApi;
 export const { useAddFlightMutation, useGetUserFlightsQuery } = userApi;
 export const { update } = sessionSlice.actions;

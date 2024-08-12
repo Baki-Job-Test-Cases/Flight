@@ -1,11 +1,6 @@
 import { type Request, type Response } from 'express';
 import * as z from 'zod';
-import {
-    getAirlineQuery,
-    getDestinationQuery,
-    getFlightQuery,
-    getFlightsQuery,
-} from '../queries';
+import { getFlightQuery, getFlightsQuery } from '../queries';
 import { flightFiltersSchema } from '../schemas';
 import type {
     FlightFilters,
@@ -28,14 +23,13 @@ export class FlightController {
                     success: false,
                     error: 'Enter valid query data ..!',
                 });
-
             const flights = await getFlightsQuery(validatedFilters.data);
 
             return response.json({
                 success: true,
                 flights,
             });
-        } catch (error) {
+        } catch (error: any) {
             return response.json({
                 success: false,
                 error: 'Something went wrong..!',

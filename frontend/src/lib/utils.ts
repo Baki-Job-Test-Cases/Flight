@@ -6,12 +6,11 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export const stringifyObjectValues = (
-    payload: Record<string, any>,
-): Record<string, string> =>
+export const stringifyObjectValues = (payload: Record<string, any>): Record<string, string> =>
     Object.entries(payload).reduce(
         (acc, [key, value]) => {
-            acc[key] = value.toString();
+            if (value) acc[key] = value.toString();
+            else delete acc[key];
 
             return acc;
         },

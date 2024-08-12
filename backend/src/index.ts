@@ -39,17 +39,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
-    cors(),
-    //     {
-    //     origin: function (origin, callback) {
-    //         if (process.env.CORS_ORIGIN === origin) {
-    //             callback(null, true);
-    //         } else {
-    //             callback(Error('Blocked By Cors'));
-    //         }
-    //     },
-    //     credentials: true,
-    // }
+    cors({
+        origin: function (origin, callback) {
+            // if (process.env.CORS_ORIGIN === origin) {
+            callback(null, true);
+            // } else {
+            //     callback(Error('Blocked By Cors'));
+            // }
+        },
+        credentials: true,
+    }),
 );
 app.use(limiter);
 

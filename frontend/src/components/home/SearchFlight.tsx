@@ -1,28 +1,22 @@
 import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { RiPlaneLine } from 'react-icons/ri';
+import { ImSpinner9 } from 'react-icons/im';
 import { useSearchParams } from 'react-router-dom';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import Direction from './Direction';
+import FromDate from './FromDate';
+import ToDate from './ToDate';
+import { Form } from '@/components/ui/form';
 import { stringifyObjectValues } from '@/lib/utils';
 import { flightFiltersSchema } from '@/schemas';
-// import ComboboxDemo from '../test';
+import { useLazyGetFlightsQuery } from '@/store';
 import { Button } from '../ui/button';
-import VisuallyHidden from '../VisuallyHidden';
 import type { SubmitHandler } from 'react-hook-form';
 import type { FlightFilters } from '@/types';
 
 export default function SearchFlight() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const [getFlights, { data: result, isFetching }] = useLazyGetFlightsQuery();
     const validatedSearchParams = useMemo(
         () => flightFiltersSchema.safeParse(Object.fromEntries(searchParams)),
 
@@ -33,7 +27,7 @@ export default function SearchFlight() {
         resolver: zodResolver(flightFiltersSchema),
         mode: 'all',
         defaultValues: validatedSearchParams.success
-            ? validatedSearchParams.data
+            ? { ...validatedSearchParams.data, flightDirection: 'A' }
             : {
                   flightDirection: 'A',
               },
@@ -42,79 +36,32 @@ export default function SearchFlight() {
     const onSubmit: SubmitHandler<FlightFilters> = (data) => {
         setSearchParams(stringifyObjectValues(data));
 
-        console.log(data);
+        getFlights(data);
     };
 
     return (
-        <section
-            aria-describedby="bookFlight"
-            className="rounded-lg bg-white p-6"
-        >
+        <section aria-describedby="bookFlight" className="rounded-lg bg-white p-6">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="flex flex-wrap items-center">
-                        <div className="mr-auto">
-                            <div className="flex items-center gap-1.5 text-lg">
-                                <RiPlaneLine className="size-6 rotate-90" />
-                                <h2
-                                    className="font-bold uppercase"
-                                    id="bookFlight"
-                                >
-                                    Book your flight
-                                </h2>
-                            </div>
-                        </div>
-                        <FormField
-                            control={form.control}
-                            name="flightDirection"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <VisuallyHidden>
-                                        <FormLabel>Flight Direction</FormLabel>
-                                    </VisuallyHidden>
-                                    <FormControl className="flex items-center text-center">
-                                        <RadioGroup
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                            className="gap-0"
-                                        >
-                                            <FormItem>
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value="D"
-                                                        className="hidden"
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="!mt-0 inline-block w-28 cursor-pointer rounded-l-3xl bg-purple px-5 py-3 font-semibold text-white">
-                                                    Departure
-                                                </FormLabel>
-                                            </FormItem>
-                                            <FormItem>
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value="A"
-                                                        className="hidden"
-                                                    />
-                                                </FormControl>
-                                                <FormLabel className="!mt-0 inline-block w-28 cursor-pointer rounded-r-3xl bg-gray-200 px-5 py-3 font-semibold text-purple">
-                                                    Arrival
-                                                </FormLabel>
-                                            </FormItem>
-                                        </RadioGroup>
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <Direction />
+                    <div className="flex flex-wrap gap-x-2">
+                        <FromDate />
+                        <ToDate />
                     </div>
-
-                    <Button type="submit" className="bg-purple text-white">
-                        Show Flights
+                    <Button
+                        type="submit"
+                        className="w-28 bg-purple text-white"
+                        disabled={isFetching || !form.formState.isValid}
+                        aria-label={isFetching ? 'Showing Flights' : 'Show Flights'}
+                    >
+                        {isFetching ? (
+                            <ImSpinner9 className="size-full animate-spin p-px" />
+                        ) : (
+                            'Show Flights'
+                        )}
                     </Button>
                 </form>
             </Form>
-            {/* <ComboboxDemo /> */}
         </section>
     );
 }

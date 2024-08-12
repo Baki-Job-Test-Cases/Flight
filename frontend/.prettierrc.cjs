@@ -1,11 +1,9 @@
 /** @type {import("prettier").Config} */
 module.exports = {
-    plugins: [
-        '@ianvs/prettier-plugin-sort-imports',
-        'prettier-plugin-tailwindcss',
-    ],
+    plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
     tabWidth: 4,
     singleQuote: true,
+    printWidth: 100,
     importOrder: [
         '.css$',
         '^react$',
