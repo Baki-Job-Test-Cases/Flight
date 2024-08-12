@@ -10,7 +10,6 @@ export const stringifyObjectValues = (payload: Record<string, any>): Record<stri
     Object.entries(payload).reduce(
         (acc, [key, value]) => {
             if (value) acc[key] = value.toString();
-            else delete acc[key];
 
             return acc;
         },

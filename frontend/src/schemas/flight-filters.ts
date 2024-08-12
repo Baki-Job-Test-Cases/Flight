@@ -30,5 +30,6 @@ export const flightFiltersSchema = z
         fromScheduleDate: z.string().date(), //check
         toScheduleDate: z.string().date(), //check
         isOperationalFlight: z.coerce.boolean(),
+        route: z.string().min(3).max(4),
     })
     .partial();

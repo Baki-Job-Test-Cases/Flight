@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ImSpinner9 } from 'react-icons/im';
 import { useSearchParams } from 'react-router-dom';
+import Destination from './Destination';
 import Direction from './Direction';
 import FromDate from './FromDate';
 import ToDate from './ToDate';
@@ -45,12 +46,13 @@ export default function SearchFlight() {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <Direction />
                     <div className="flex flex-wrap gap-x-2">
+                        <Destination />
                         <FromDate />
                         <ToDate />
                     </div>
                     <Button
                         type="submit"
-                        className="w-28 bg-purple text-white"
+                        className="mt-2 w-28 bg-purple text-white"
                         disabled={isFetching || !form.formState.isValid}
                         aria-label={isFetching ? 'Showing Flights' : 'Show Flights'}
                     >
