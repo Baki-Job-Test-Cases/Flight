@@ -36,12 +36,8 @@ export const flightFiltersSchema = z
             .number()
             .max(499)
             .transform((val) => val - 1),
-        fromDateTime: z.coerce
-            .date()
-            .transform((val) => val.toISOString().slice(0, 19)),
-        toDateTime: z.coerce
-            .date()
-            .transform((val) => val.toISOString().slice(0, 19)),
+        fromDateTime: z.coerce.date().transform((val) => transformDate(val)),
+        toDateTime: z.coerce.date().transform((val) => transformDate(val)),
         route: z.string().min(3).max(4),
         sort: z.enum([
             '+flightName',
@@ -81,3 +77,15 @@ export const flightFiltersSchema = z
         ]),
     })
     .partial();
+
+const transformDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+};

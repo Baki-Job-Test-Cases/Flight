@@ -68,29 +68,25 @@ export default function Destination() {
             control={form.control}
             name="route"
             render={({ field }) => (
-                <FormItem className="flex">
+                <FormItem className="max-sm:w-full">
                     <VisuallyHidden>
                         <FormLabel>Destination</FormLabel>
                     </VisuallyHidden>
-                    <div
-                        className={cn('flex flex-wrap gap-2', {
-                            'flex-row-reverse': flightDirection === 'A',
-                        })}
-                    >
+                    <div className="flex flex-wrap gap-2">
                         <div
                             className={cn(
-                                'flex h-10 w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal',
+                                'flex w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                 {
                                     'rounded-l-3xl': flightDirection === 'D',
-                                    'rounded-r-3xl': flightDirection === 'A',
+                                    'order-last rounded-r-3xl': flightDirection === 'A',
                                 },
                             )}
                         >
                             {flightDirection === 'D' && (
-                                <FaPlaneDeparture className="flex h-full w-5 text-purple" />
+                                <FaPlaneDeparture className="flex h-full min-w-5 text-purple" />
                             )}
                             {flightDirection === 'A' && (
-                                <FaPlaneArrival className="flex h-full w-5 text-purple" />
+                                <FaPlaneArrival className="flex h-full min-w-5 text-purple" />
                             )}
                             Schiphol - AMS
                         </div>
@@ -98,18 +94,18 @@ export default function Destination() {
                             <FormControl>
                                 <PopoverTrigger
                                     className={cn(
-                                        'flex h-10 w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal',
+                                        'flex w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                         {
                                             'rounded-l-3xl': flightDirection === 'A',
-                                            'rounded-r-3xl': flightDirection === 'D',
+                                            'order-last rounded-r-3xl': flightDirection === 'D',
                                         },
                                     )}
                                 >
                                     {flightDirection === 'A' && (
-                                        <FaPlaneDeparture className="flex h-full w-5 text-purple" />
+                                        <FaPlaneDeparture className="flex h-full min-w-5 text-purple" />
                                     )}
                                     {flightDirection === 'D' && (
-                                        <FaPlaneArrival className="flex h-full w-5 text-purple" />
+                                        <FaPlaneArrival className="flex h-full min-w-5 text-purple" />
                                     )}
                                     {getDestinationResult.isFetching
                                         ? null

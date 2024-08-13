@@ -42,32 +42,43 @@ export default function SearchFlight() {
     });
 
     //watch extra filters for set search params.
-    const [sort, includeDelays] = form.watch(['sort', 'includedelays']);
+    const [sort, includeDelays, airline] = form.watch(['sort', 'includedelays', 'airline']);
 
     const onSubmit: SubmitHandler<FlightFilters> = (data) => {
-        const value = Object.assign(data, { page: 1 });
+        const value = Object.assign(data, {
+            page: 1,
+        });
 
         setSearchParams(stringifyObjectValues(value));
-
-        getFlights(value);
     };
 
+    // when extra filters change auto search.
     useEffect(() => {
-        if (form.formState.isValid && (sort || includeDelays !== undefined)) {
+        if (form.formState.isValid && (sort || includeDelays !== undefined || airline)) {
             sort && searchParams.set('sort', form.getValues('sort') || '');
 
             includeDelays !== undefined &&
                 searchParams.set('includedelays', includeDelays.toString());
 
+            airline && searchParams.set('airline', airline);
+
             searchParams.set('page', '1');
 
             setSearchParams(searchParams);
         }
-    }, [sort, includeDelays]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sort, includeDelays, airline]);
 
     useEffect(() => {
         if (page && form.formState.isValid) {
-            const values = Object.assign(form.getValues(), { page });
+            const toDateTime = form.getValues('toDateTime');
+            const values = Object.assign(form.getValues(), {
+                page,
+                ...(toDateTime && {
+                    toDateTime: new Date(toDateTime.setHours(23, 59, 59)),
+                }),
+            });
 
             setSearchParams(stringifyObjectValues(values));
 
@@ -79,15 +90,17 @@ export default function SearchFlight() {
 
     return (
         <div className="w-full">
-            <section aria-describedby="bookFlight" className="w-full">
+            <section aria-describedby="bookFlight" className="relative w-full">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="rounded-2xl bg-white p-6">
                             <Direction />
                             <div className="flex flex-wrap gap-x-2">
                                 <Destination />
-                                <FromDate />
-                                <ToDate />
+                                <div className="flex items-center gap-x-2 max-sm:w-full max-sm:flex-col">
+                                    <FromDate />
+                                    <ToDate />
+                                </div>
                             </div>
                             <Button
                                 type="submit"
@@ -103,28 +116,27 @@ export default function SearchFlight() {
                             </Button>
                         </div>
                         <div className="mt-6 flex gap-6">
-                            {isFetching ? (
-                                <ImSpinner9 className="size-40 animate-spin" />
-                            ) : result?.success ? (
-                                result.flights && (
-                                    <div className="w-full">
-                                        <FlightList flights={result.flights} />
-                                    </div>
-                                )
-                            ) : (
-                                <div className="text-3xl text-red-500">{result?.error}</div>
-                            )}
-                            <div className="ml-auto flex min-w-60 flex-col gap-y-4 rounded-xl">
+                            <div className="absolute flex w-60 flex-col gap-4 rounded-xl max-lg:left-2 lg:right-0">
                                 <Sort />
-                                <IncludeDelays />
                                 <Airlines />
+                                <IncludeDelays />
                             </div>
                         </div>
                     </form>
                 </Form>
-                {!isFetching && result?.success && result.flights && result.flights.length > 0 && (
-                    <FlightPagination isLoading={isFetching} />
-                )}
+                <div className="max-lg:mt-64 lg:mr-[16.5rem]">
+                    {isFetching ? (
+                        <ImSpinner9 className="mx-auto size-40 animate-spin" />
+                    ) : result?.success ? (
+                        result.flights && <FlightList flights={result.flights} />
+                    ) : (
+                        <div className="text-3xl text-red-500">{result?.error}</div>
+                    )}
+                    {!isFetching &&
+                        result?.success &&
+                        result.flights &&
+                        result.flights.length > 0 && <FlightPagination isLoading={isFetching} />}
+                </div>
             </section>
         </div>
     );

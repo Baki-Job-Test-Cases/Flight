@@ -1,5 +1,6 @@
 import { LuPlaneLanding, LuPlaneTakeoff } from 'react-icons/lu';
 import { MdOutlineAirplanemodeActive } from 'react-icons/md';
+import BookFlight from './BookFlight';
 import { useLocale } from '@/hooks/use-locale';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
@@ -25,7 +26,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         <span className="mx-1">-</span>
                         <span>Schiphol</span>
                     </h2>
-                    <div className="flex items-center gap-x-2">
+                    <div className="flex items-center gap-x-2 max-sm:flex-col max-sm:text-center">
                         <div className="flex flex-col">
                             <div className="flex items-center gap-x-2">
                                 <LuPlaneTakeoff className="mr-px size-5" />
@@ -49,13 +50,13 @@ export default function FlightItem({ flight }: FligtItemProps) {
                                     : flight.destinations?.[0].iata}
                             </span>
                         </div>
-                        <div className="mx-auto h-[2px] w-full max-w-24 bg-gray-300"></div>
+                        <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col items-center">
-                            <div className="bg-airline-icon h-6 w-24 bg-contain bg-no-repeat" />
+                            <div className="h-6 w-24 bg-airline-icon bg-contain bg-no-repeat" />
                             <MdOutlineAirplanemodeActive className="mt-1 size-8 rotate-90 text-purple" />
                             <span>2h 25m (Nonstop)</span>
                         </div>
-                        <div className="mx-auto h-[2px] w-full max-w-24 bg-gray-300"></div>
+                        <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col">
                             <div className="flex items-center gap-x-2">
                                 <LuPlaneLanding className="size-5" />
@@ -81,14 +82,16 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         </div>
                     </div>
                 </div>
-                <div className="flex h-[4.5rem] justify-between pl-6">
+                <div className="flex flex-wrap justify-between gap-2 max-[360px]:justify-center min-[360px]:pl-6">
                     <div>
                         <div className="text-xl font-bold text-purple">Price: $200</div>
                         <div className="font-medium">Round Trip</div>
                     </div>
-                    <Button className="h-full rounded-bl-none rounded-tr-none bg-purple px-10 text-lg">
+                    {/* <Button className="h-[4.5rem] rounded-bl-none rounded-tr-none bg-purple px-10 text-lg">
                         Book Flight
-                    </Button>
+                    </Button> */}
+
+                    {flight.id && <BookFlight id={flight.id} />}
                 </div>
             </div>
             <Button className="text-md w-fit rounded-none rounded-b-lg bg-gray-300 px-5 py-6 font-medium text-purple underline hover:bg-gray-300">

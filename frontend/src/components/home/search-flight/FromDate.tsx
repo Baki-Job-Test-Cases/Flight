@@ -26,7 +26,7 @@ export default function FromDate() {
                 control={form.control}
                 name="fromDateTime"
                 render={({ field }) => (
-                    <FormItem className="flex flex-col">
+                    <FormItem className="max-sm:w-full">
                         <VisuallyHidden>
                             <FormLabel>Date of from</FormLabel>
                         </VisuallyHidden>
@@ -36,11 +36,11 @@ export default function FromDate() {
                                     <Button
                                         variant={'outline'}
                                         className={cn(
-                                            'text-md w-[240px] justify-normal rounded-l-3xl border-2 pl-1 text-left font-normal',
+                                            'text-md flex w-60 justify-normal rounded-l-3xl border-2 pl-1 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                             !field.value && 'text-muted-foreground',
                                         )}
                                     >
-                                        <FaRegCalendarAlt className="flex h-full w-8 text-purple" />
+                                        <FaRegCalendarAlt className="flex h-full min-w-8 text-purple" />
                                         {field.value
                                             ? new Date(field.value || '').toDateString()
                                             : 'Pick a from date'}

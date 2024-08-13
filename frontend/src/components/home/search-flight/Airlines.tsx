@@ -60,21 +60,20 @@ export default function Airlines() {
             control={form.control}
             name="airline"
             render={({ field }) => (
-                <FormItem className="flex">
-                    <VisuallyHidden>
-                        <FormLabel>Destination</FormLabel>
-                    </VisuallyHidden>
+                <FormItem className="flex flex-col">
+                    <FormLabel className="text-lg font-semibold">Select Airline: </FormLabel>
                     <Popover open={open} onOpenChange={setOpen}>
                         <FormControl>
                             <PopoverTrigger
                                 className={cn(
-                                    'flex h-10 w-60 gap-x-1 rounded-md border-2 bg-white py-2 pl-3 pr-4 text-left font-normal',
+                                    'flex w-60 gap-x-1 rounded-md border-2 bg-white py-2 pl-3 pr-4 text-left font-normal',
                                 )}
                             >
                                 {getAirlineResult.isFetching
                                     ? null
-                                    : airlines.find((airline) => airline.iata === field.value)
-                                          ?.publicName ||
+                                    : airlines.find(
+                                          (airline) => airline.iata === field.value && field.value,
+                                      )?.publicName ||
                                       (getAirlineResult.data?.success &&
                                           getAirlineResult.data.airline.publicName) ||
                                       'Select Airline'}

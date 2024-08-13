@@ -41,6 +41,14 @@ export class UserController {
                     add: false,
                     error: 'This flight has already been added..!',
                 });
+            if (
+                flight.scheduleDateTime &&
+                new Date(flight.scheduleDateTime) < new Date()
+            )
+                return response.json({
+                    add: false,
+                    error: 'You cant book passed flight..!',
+                });
 
             await db.user.update({
                 where: { id: user.id, email: user.email },

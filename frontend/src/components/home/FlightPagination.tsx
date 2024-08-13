@@ -24,9 +24,9 @@ export default function FlightPagination({ isLoading }: FlightPaginationProps) {
     };
 
     return (
-        <div className="flex items-center justify-center gap-x-3">
+        <div className="my-3 flex items-center justify-center gap-x-3">
             <Button
-                className="w-24 border-2 px-4 py-2"
+                className="w-24 border-2 bg-purple px-4 py-2"
                 onClick={handlePreviousClick}
                 disabled={isLoading || page < 2}
                 aria-label={isLoading ? 'Loading previous page' : 'Previous Page'}
@@ -34,7 +34,7 @@ export default function FlightPagination({ isLoading }: FlightPaginationProps) {
                 {isLoading ? <ImSpinner9 className="size-full animate-spin p-px" /> : 'Previous'}
             </Button>
             <Button
-                className="w-24 border-2 px-4 py-2"
+                className="w-24 border-2 bg-purple px-4 py-2"
                 onClick={handleNextClick}
                 disabled={isLoading}
                 aria-label={isLoading ? 'Loading bext page' : 'Next page'}
