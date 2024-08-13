@@ -1,3 +1,6 @@
+import type { Airline } from './airline.interface';
+import type { Destination } from './destination.interface';
+
 interface AircraftTypeType {
     iataMain?: string;
     iataSub?: string;
@@ -99,4 +102,6 @@ export interface Flight {
     terminal?: number;
     transferPositions?: TransferPositionsType;
     schemaVersion?: string;
+    airline?: Airline;
+    destinations?: Destination[];
 }

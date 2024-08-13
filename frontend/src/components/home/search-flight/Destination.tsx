@@ -11,11 +11,11 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import VisuallyHidden from '@/components/VisuallyHidden';
 import { cn } from '@/lib/utils';
 import { useLazyGetDestinationQuery, useLazyGetDestinationsQuery } from '@/store';
-import { Input } from '../ui/input';
-import VisuallyHidden from '../VisuallyHidden';
 import type { Destination, FlightFilters } from '@/types';
 
 export default function Destination() {
@@ -30,6 +30,8 @@ export default function Destination() {
 
     useEffect(() => {
         route && getDestination({ iata: route });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -68,7 +70,7 @@ export default function Destination() {
             render={({ field }) => (
                 <FormItem className="flex">
                     <VisuallyHidden>
-                        <FormLabel>Field</FormLabel>
+                        <FormLabel>Destination</FormLabel>
                     </VisuallyHidden>
                     <div
                         className={cn('flex flex-wrap gap-2', {
@@ -148,7 +150,7 @@ export default function Destination() {
                                         </div>
                                     ) : (
                                         <InfiniteScroll
-                                            className="mt-2"
+                                            className="scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg mt-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
                                             height={300}
                                             dataLength={destinations.length}
                                             next={() => {

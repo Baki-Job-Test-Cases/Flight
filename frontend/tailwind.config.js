@@ -78,11 +78,16 @@ module.exports = {
             backgroundImage: {
                 login: "url('@/assets/login.jpg')",
                 register: "url('@/assets/register.png')",
+                hotel: "url('@/assets/hotel.png')",
+                rent: "url('@/assets/rent.jpg')",
+                travel: "url('@/assets/travel.webp')",
+                'airline-icon': "url('@/assets/airline-icon.png')",
             },
         },
     },
     plugins: [
         require('tailwindcss-animate'),
+        require('tailwind-scrollbar'),
         plugin(function ({ addUtilities }) {
             addUtilities({
                 '.visually-hidden': {

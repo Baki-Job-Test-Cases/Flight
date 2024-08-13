@@ -10,18 +10,10 @@ export const flightFiltersSchema = z
                 'Enter Valid Time',
             ),
         flightName: z.string(),
-        flightDirection: z.enum(['A', 'D']),
+
         airline: z.string().max(3),
         airlineCode: z.number(),
         includedelays: z.coerce.boolean(),
-        page: z.coerce.number().max(499),
-        sort: z.string(), //check
-        fromDateTime: z.coerce
-            .date()
-            .transform((val) => val.toISOString().slice(0, 19)),
-        toDateTime: z.coerce
-            .date()
-            .transform((val) => val.toISOString().slice(0, 19)),
         searchDateTimeField: z.enum([
             'estimatedLandingTime',
             'actualLandingTime',
@@ -37,6 +29,55 @@ export const flightFiltersSchema = z
         fromScheduleDate: z.string().date(), //check
         toScheduleDate: z.string().date(), //check
         isOperationalFlight: z.coerce.boolean(),
+
+        //kullanılanlar
+        flightDirection: z.enum(['A', 'D']),
+        page: z.coerce
+            .number()
+            .max(499)
+            .transform((val) => val - 1),
+        fromDateTime: z.coerce
+            .date()
+            .transform((val) => val.toISOString().slice(0, 19)),
+        toDateTime: z.coerce
+            .date()
+            .transform((val) => val.toISOString().slice(0, 19)),
         route: z.string().min(3).max(4),
+        sort: z.enum([
+            '+flightName',
+            '-flightName',
+            '+scheduleDate',
+            '-scheduleDate',
+            '+scheduleTime',
+            '-scheduleTime',
+            '+flightDirection',
+            '-flightDirection',
+            '+mainFlight',
+            '-mainFlight',
+            '+airlineCode',
+            '-airlineCode',
+            '+id',
+            '-id',
+            '+estimatedLandingTime',
+            '-estimatedLandingTime',
+            '+actualLandingTime',
+            '-actualLandingTime',
+            '+publicEstimatedOffBlockTime',
+            '-publicEstimatedOffBlockTime',
+            '+actualOffBlockTime',
+            '-actualOffBlockTime',
+            '+expectedTimeBoarding',
+            '-expectedTimeBoarding',
+            '+expectedTimeGateClosing',
+            '-expectedTimeGateClosing',
+            '+expectedTimeGateOpen',
+            '-expectedTimeGateOpen',
+            '+expectedTimeOnBelt',
+            '-expectedTimeOnBelt',
+            '+scheduleDateTime',
+            '-scheduleDateTime',
+            '+lastUpdatedAt',
+            '-lastUpdatedAt',
+        ]),
     })
     .partial();

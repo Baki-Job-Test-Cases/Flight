@@ -9,8 +9,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import VisuallyHidden from '@/components/VisuallyHidden';
 import { FlightFilters } from '@/types';
-import VisuallyHidden from '../VisuallyHidden';
 
 export default function Direction() {
     const form = useFormContext<FlightFilters>();
@@ -41,10 +41,7 @@ export default function Direction() {
                             >
                                 <FormItem>
                                     <FormControl>
-                                        <RadioGroupItem
-                                            value="D"
-                                            className="hidden"
-                                        />
+                                        <RadioGroupItem value="D" className="hidden" />
                                     </FormControl>
                                     <FormLabel className="!mt-0 inline-block w-28 cursor-pointer rounded-l-3xl bg-purple px-5 py-3 font-semibold text-white">
                                         Departure
@@ -52,10 +49,7 @@ export default function Direction() {
                                 </FormItem>
                                 <FormItem>
                                     <FormControl>
-                                        <RadioGroupItem
-                                            value="A"
-                                            className="hidden"
-                                        />
+                                        <RadioGroupItem value="A" className="hidden" />
                                     </FormControl>
                                     <FormLabel className="!mt-0 inline-block w-28 cursor-pointer rounded-r-3xl bg-gray-200 px-5 py-3 font-semibold text-purple">
                                         Arrival

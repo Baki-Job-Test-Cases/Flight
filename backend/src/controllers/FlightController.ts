@@ -23,6 +23,7 @@ export class FlightController {
                     success: false,
                     error: 'Enter valid query data ..!',
                 });
+
             const flights = await getFlightsQuery(validatedFilters.data);
 
             return response.json({
@@ -30,6 +31,7 @@ export class FlightController {
                 flights,
             });
         } catch (error: any) {
+            console.log(error);
             return response.json({
                 success: false,
                 error: 'Something went wrong..!',

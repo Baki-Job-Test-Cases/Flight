@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -12,23 +12,30 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import VisuallyHidden from '@/components/VisuallyHidden';
 import { cn } from '@/lib/utils';
-import VisuallyHidden from '../VisuallyHidden';
 import type { FlightFilters } from '@/types';
 
-export default function FromDate() {
+export default function ToDate() {
     const form = useFormContext<FlightFilters>();
     const [open, setOpen] = useState(false);
+    const watchFromDateTime = form.watch('fromDateTime');
+
+    useEffect(() => {
+        form.resetField('toDateTime');
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchFromDateTime]);
 
     return (
         <>
             <FormField
                 control={form.control}
-                name="fromDateTime"
+                name="toDateTime"
                 render={({ field }) => (
                     <FormItem className="flex flex-col">
                         <VisuallyHidden>
-                            <FormLabel>Date of from</FormLabel>
+                            <FormLabel>Date of to</FormLabel>
                         </VisuallyHidden>
                         <Popover open={open} onOpenChange={setOpen}>
                             <PopoverTrigger asChild>
@@ -36,14 +43,14 @@ export default function FromDate() {
                                     <Button
                                         variant={'outline'}
                                         className={cn(
-                                            'text-md w-[240px] justify-normal rounded-l-3xl border-2 pl-1 text-left font-normal',
+                                            'text-md w-[240px] justify-normal rounded-r-3xl border-2 pl-1 text-left font-normal',
                                             !field.value && 'text-muted-foreground',
                                         )}
                                     >
                                         <FaRegCalendarAlt className="flex h-full w-8 text-purple" />
                                         {field.value
                                             ? new Date(field.value || '').toDateString()
-                                            : 'Pick a from date'}
+                                            : 'Pick a to date'}
                                     </Button>
                                 </FormControl>
                             </PopoverTrigger>
@@ -56,9 +63,22 @@ export default function FromDate() {
 
                                         setOpen(false);
                                     }}
-                                    disabled={(date) =>
-                                        date < new Date(new Date().setHours(0, 0, 0, 0))
-                                    }
+                                    disabled={(date) => {
+                                        const fromDate = new Date(
+                                            form.getValues('fromDateTime') || '',
+                                        );
+                                        const tomorrow = new Date(
+                                            form.getValues('fromDateTime') || '',
+                                        );
+
+                                        tomorrow.setDate(tomorrow.getDate() + 3);
+
+                                        return (
+                                            date < new Date(new Date().setHours(0, 0, 0, 0)) ||
+                                            date < fromDate ||
+                                            date > tomorrow
+                                        );
+                                    }}
                                 />
                             </PopoverContent>
                         </Popover>

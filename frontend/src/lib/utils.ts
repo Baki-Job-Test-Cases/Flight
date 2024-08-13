@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const stringifyObjectValues = (payload: Record<string, any>): Record<string, string> =>
     Object.entries(payload).reduce(
         (acc, [key, value]) => {
-            if (value) acc[key] = value.toString();
+            if (value || value === 0) acc[key] = value.toString();
 
             return acc;
         },
