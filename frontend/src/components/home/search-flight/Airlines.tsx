@@ -34,7 +34,6 @@ export default function Airlines() {
 
     useEffect(() => {
         getAirlinesResult.data?.success &&
-            getAirlinesResult.data.airlines &&
             setAirlines([...airlines, ...getAirlinesResult.data.airlines]);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,8 +112,7 @@ export default function Airlines() {
                                         hasMore={
                                             !!(
                                                 getAirlinesResult.data?.success &&
-                                                getAirlinesResult.data.airlines &&
-                                                getAirlinesResult.data.airlines?.length > 0
+                                                getAirlinesResult.data.airlines.length > 0
                                             )
                                         }
                                         loader={<h4>Loading...</h4>}

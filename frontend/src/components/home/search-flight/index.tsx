@@ -128,14 +128,13 @@ export default function SearchFlight() {
                     {isFetching ? (
                         <ImSpinner9 className="mx-auto size-40 animate-spin" />
                     ) : result?.success ? (
-                        result.flights && <FlightList flights={result.flights} />
+                        <FlightList flights={result.flights} />
                     ) : (
                         <div className="text-3xl text-red-500">{result?.error}</div>
                     )}
-                    {!isFetching &&
-                        result?.success &&
-                        result.flights &&
-                        result.flights.length > 0 && <FlightPagination isLoading={isFetching} />}
+                    {!isFetching && result?.success && result.flights.length > 0 && (
+                        <FlightPagination isLoading={isFetching} />
+                    )}
                 </div>
             </section>
         </div>

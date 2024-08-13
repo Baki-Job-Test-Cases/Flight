@@ -42,7 +42,6 @@ export default function Destination() {
 
     useEffect(() => {
         getDestinationsResult.data?.success &&
-            getDestinationsResult.data.destinations &&
             setDestinations([...destinations, ...getDestinationsResult.data.destinations]);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

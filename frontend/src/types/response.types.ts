@@ -4,9 +4,7 @@ import type { Flight } from './flight.interface';
 import type { RejectWithReason } from './reject-with-reason.type';
 import type { User } from './user-interface';
 
-export type AuthResponse<T extends Record<string, any>> =
-    | T
-    | RejectWithReason<'auth'>;
+export type AuthResponse<T extends Record<string, any>> = T | RejectWithReason<'auth'>;
 
 export type SignUpResponse =
     | {
@@ -36,9 +34,7 @@ export type VerifyResponse = AuthResponse<
     | RejectWithReason<'verify'>
 >;
 
-export type AddFlightResponse = AuthResponse<
-    { add: true } | RejectWithReason<'add'>
->;
+export type AddFlightResponse = AuthResponse<{ add: true } | RejectWithReason<'add'>>;
 
 export type GetUserFlightsResponse = AuthResponse<
     { success: true; flights: Flight[] } | RejectWithReason<'success'>
@@ -47,7 +43,7 @@ export type GetUserFlightsResponse = AuthResponse<
 export type GetFlightsResponse =
     | {
           success: true;
-          flights?: Flight[];
+          flights: Flight[];
       }
     | RejectWithReason<'success'>;
 
@@ -61,7 +57,7 @@ export type GetFlightResponse =
 export type GetDestinationsResponse =
     | {
           success: true;
-          destinations?: Destination[];
+          destinations: Destination[];
       }
     | RejectWithReason<'success'>;
 
@@ -75,7 +71,7 @@ export type GetDestinationResponse =
 export type GetAirlinesResponse =
     | {
           success: true;
-          airlines?: Airline[];
+          airlines: Airline[];
       }
     | RejectWithReason<'success'>;
 
