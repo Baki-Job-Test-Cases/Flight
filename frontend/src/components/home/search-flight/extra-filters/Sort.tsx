@@ -79,7 +79,7 @@ export default function Sort() {
                             <PopoverTrigger
                                 role="combobox"
                                 className={cn(
-                                    'group flex max-w-full items-center justify-between rounded-md border-2 bg-white p-2 text-left',
+                                    'flex max-w-full items-center justify-between rounded-md border-2 bg-white p-2 text-left',
                                     !field.value && 'text-muted-foreground',
                                 )}
                             >
@@ -89,7 +89,7 @@ export default function Sort() {
                                               ?.text
                                         : 'Select Sort Option'}
                                 </span>
-                                <TiArrowSortedDown className="h-6 min-w-5 group-[data-state=open]:rotate-90" />
+                                <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>
                         <PopoverContent className="p-0 popover-content-width-same-as-its-trigger">

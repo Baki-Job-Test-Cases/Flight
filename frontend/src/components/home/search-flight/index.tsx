@@ -21,7 +21,7 @@ import type { FlightFilters } from '@/types';
 export default function SearchFlight() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get('page'));
-    const [getFlights, { data: result, isFetching }] = useLazyGetFlightsQuery();
+    const [getFlights, { data: result, isFetching, isUninitialized }] = useLazyGetFlightsQuery();
     const validatedSearchParams = useMemo(
         () => flightFiltersSchema.safeParse(Object.fromEntries(searchParams)),
 
@@ -42,15 +42,18 @@ export default function SearchFlight() {
     //watch extra filters for set search params.
     const [sort, includeDelays, airline] = form.watch(['sort', 'includedelays', 'airline']);
 
+    //On form submit set page 1 and set form data to search params
     const onSubmit: SubmitHandler<FlightFilters> = (data) => {
         const value = Object.assign(data, {
             page: 1,
         });
 
         setSearchParams(stringifyObjectValues(value));
+
+        getFlights(value);
     };
 
-    // when extra filters change auto search.
+    // Auto search if the form is valid when extra filters change .
     useEffect(() => {
         if (form.formState.isValid && (sort || includeDelays !== undefined || airline)) {
             sort && searchParams.set('sort', form.getValues('sort') || '');
@@ -68,18 +71,12 @@ export default function SearchFlight() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort, includeDelays, airline]);
 
-    //Flight search if the form is valid when search params change
+    //Search flight if the form is valid when search params change
     useEffect(() => {
         if (page && form.formState.isValid) {
-            const toDateTime = form.getValues('toDateTime');
             const values = Object.assign(form.getValues(), {
                 page,
-                ...(toDateTime && {
-                    toDateTime: new Date(toDateTime.setHours(23, 59, 59)),
-                }),
             });
-
-            setSearchParams(stringifyObjectValues(values));
 
             getFlights(values);
         }

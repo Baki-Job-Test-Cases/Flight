@@ -54,7 +54,7 @@ export default function SignIn() {
 
     return (
         <div className="flex h-full justify-center">
-            <div className="flex-1 bg-login bg-cover max-md:hidden"></div>
+            <div className="flex-1 bg-login bg-cover bg-[60%_10%] max-md:hidden"></div>
             <div className="my-auto flex w-1/2 max-w-[35rem] flex-col items-center px-14 py-2 max-md:w-full max-md:max-w-full max-md:px-[10%]">
                 <h1 id="loginForm" className="mb-6 text-3xl">
                     Sign In to continue
@@ -99,7 +99,7 @@ export default function SignIn() {
                         />
                         <Button
                             type="submit"
-                            className="mt-4 h-12 w-full rounded-md border-black bg-[#622fcf] text-xs uppercase tracking-widest"
+                            className="mt-4 h-12 w-full rounded-md border-black bg-purple text-xs uppercase tracking-widest"
                             disabled={isLoading || !form.formState.isValid}
                             aria-label={isLoading ? 'Signing in' : 'Sign in'}
                         >

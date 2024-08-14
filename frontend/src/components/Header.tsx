@@ -53,7 +53,7 @@ export default function Header() {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <span className="w-40 truncate text-sm font-medium capitalize">{`${user?.name} ${user?.surname}`}</span>
+            <span className="max-w-40 truncate text-sm font-medium capitalize">{`${user?.name} ${user?.surname}`}</span>
         </div>
     );
 

@@ -78,7 +78,7 @@ module.exports = {
             },
             backgroundImage: {
                 login: "url('@/assets/login.jpg')",
-                register: "url('@/assets/register.png')",
+                register: "url('@/assets/register.jpg')",
                 hotel: "url('@/assets/hotel.png')",
                 rent: "url('@/assets/rent.jpg')",
                 travel: "url('@/assets/travel.webp')",

@@ -6,9 +6,7 @@ export const resetAfterSignOutMiddleware: Middleware = (store) => {
         return (action: any) => {
             const result = next(action);
 
-            // action.type === 'authApi/executeMutation/fulfilled' &&
-            // action?.meta?.arg?.endpointName === 'signOut' &&
-            // action?.payload?.signOut
+            //Reset userApi queries after logout
             if (action.type === 'session/update' && action.payload === undefined) {
                 setTimeout(() => {
                     store.dispatch(userApi.util.resetApiState());
