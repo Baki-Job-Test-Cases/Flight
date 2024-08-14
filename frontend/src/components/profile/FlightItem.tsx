@@ -27,10 +27,7 @@ export default function FlightItem({ flight }: FlightItemProps) {
                 </div>
                 <div className="flex flex-col gap-y-4">
                     <div>
-                        <VisuallyHidden>
-                            <h2>Flight Time</h2>
-                        </VisuallyHidden>
-                        <p className="text-3xl">
+                        <h2 className="text-3xl">
                             {new Date(flight.scheduleDateTime || '').toLocaleDateString(locale, {
                                 year: 'numeric',
                                 month: 'long',
@@ -38,7 +35,7 @@ export default function FlightItem({ flight }: FlightItemProps) {
                                 hour: '2-digit',
                                 minute: '2-digit',
                             })}
-                        </p>
+                        </h2>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-16 gap-y-5">
                         <div className="mr-8">

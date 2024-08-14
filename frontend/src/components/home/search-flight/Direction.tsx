@@ -20,9 +20,9 @@ export default function Direction() {
             <div className="mr-auto">
                 <div className="flex items-center gap-1.5 text-lg">
                     <RiPlaneLine className="h-6 min-w-6 rotate-90" />
-                    <h2 className="font-bold uppercase" id="bookFlight">
+                    <h1 className="font-bold uppercase" id="bookFlight">
                         Book your flight
-                    </h2>
+                    </h1>
                 </div>
             </div>
             <FormField
