@@ -9,11 +9,11 @@ const userApi = createApi({
         credentials: 'include',
     }),
     reducerPath: 'userApi',
-    tagTypes: ['Flight'],
+    tagTypes: ['Flight', 'Main'],
     endpoints(builder) {
         return {
             getUserFlights: builder.query<GetUserFlightsResponse, void>({
-                providesTags: ['Flight'],
+                providesTags: ['Flight', 'Main'],
                 query: () => ({
                     method: 'GET',
                     url: '/flight',

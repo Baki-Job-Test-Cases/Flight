@@ -55,6 +55,7 @@ module.exports = {
                 },
                 validationError: '#db1717',
                 purple: '#4a1c97',
+                sky: '#65A7FC',
             },
             borderRadius: {
                 lg: 'var(--radius)',
@@ -81,6 +82,7 @@ module.exports = {
                 hotel: "url('@/assets/hotel.png')",
                 rent: "url('@/assets/rent.jpg')",
                 travel: "url('@/assets/travel.webp')",
+                'airline-banner': "url('@/assets/airline-banner.png')",
                 'airline-icon': "url('@/assets/airline-icon.png')",
             },
         },

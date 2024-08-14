@@ -17,13 +17,13 @@ export class FlightController {
             const validatedFilters = flightFiltersSchema.safeParse(
                 request.query,
             );
-
+            console.log(request.query);
             if (!validatedFilters.success)
                 return response.json({
                     success: false,
                     error: 'Enter valid query data ..!',
                 });
-
+            console.log(validatedFilters.data);
             const flights = await getFlightsQuery(validatedFilters.data);
 
             return response.json({
@@ -31,7 +31,6 @@ export class FlightController {
                 flights,
             });
         } catch (error: any) {
-            console.log(error);
             return response.json({
                 success: false,
                 error: 'Something went wrong..!',

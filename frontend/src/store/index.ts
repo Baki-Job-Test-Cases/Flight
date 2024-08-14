@@ -6,6 +6,7 @@ import { destinationApi } from './apis/destination';
 import { flightApi } from './apis/flight';
 import { userApi } from './apis/user';
 import { rateLimitMiddleware } from './middlewares/rateLimit';
+import { resetAfterSignOutMiddleware } from './middlewares/resetAfterSignOut';
 import { sessionSlice } from './slices/session';
 
 const store = configureStore({
@@ -26,7 +27,8 @@ const store = configureStore({
             .concat(destinationApi.middleware)
             .concat(airlineApi.middleware)
             .concat(userApi.middleware)
-            .concat(rateLimitMiddleware);
+            .concat(rateLimitMiddleware)
+            .concat(resetAfterSignOutMiddleware);
     },
 });
 

@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { toZonedTime } from 'date-fns-tz';
 import jwt from 'jsonwebtoken';
 import { getAirlineQuery, getDestinationQuery } from './queries';
 import type { Response } from 'express';
@@ -97,8 +98,12 @@ export const stringifyObjectValues = (
         {} as Record<string, string>,
     );
 
-export const extendFlight = async (flight: Flight): Promise<void> => {
-    if (flight.prefixIATA || flight.prefixICAO) {
+// Take more data about flight with more request
+export const extendFlight = async (
+    flight: Flight,
+    options?: { airline?: boolean; destinations?: boolean },
+): Promise<void> => {
+    if (options?.airline && (flight.prefixIATA || flight.prefixICAO)) {
         const airline = await getAirlineQuery(
             flight.prefixIATA || flight.prefixICAO || '',
         );
@@ -106,11 +111,32 @@ export const extendFlight = async (flight: Flight): Promise<void> => {
         flight.airline = airline;
     }
 
-    if (flight.route?.destinations && flight.route.destinations.length > 0) {
+    if (
+        options?.destinations &&
+        flight.route?.destinations &&
+        flight.route.destinations.length > 0
+    ) {
         const destinations = await Promise.all(
             flight.route.destinations.map((iata) => getDestinationQuery(iata)),
         );
 
         flight.destinations = destinations;
     }
+};
+
+export const transformDateToTimeZone = (
+    date: Date,
+    timeZone: string = 'Europe/Amsterdam',
+): string => {
+    date = toZonedTime(date.toISOString(), timeZone);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
 };

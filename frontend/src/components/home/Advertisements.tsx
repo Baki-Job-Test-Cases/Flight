@@ -31,7 +31,7 @@ const advertisements: Advertisement[] = [
 export default function Advertisements() {
     return (
         <aside
-            className="sticky top-3 flex h-fit flex-col gap-y-6 text-white max-md:hidden"
+            className="flex h-fit flex-wrap items-center justify-center gap-6 text-white lg:sticky lg:top-3 lg:flex-col"
             aria-label="Other options"
         >
             {advertisements.map((advertisement) => (

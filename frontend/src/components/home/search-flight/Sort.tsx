@@ -75,18 +75,21 @@ export default function Sort() {
                 <FormItem className="flex flex-col">
                     <FormLabel className="text-lg font-semibold">Sort By: </FormLabel>
                     <Popover open={open} onOpenChange={setOpen}>
-                        <FormControl className="w-60">
+                        <FormControl>
                             <PopoverTrigger
                                 role="combobox"
                                 className={cn(
-                                    'itemse-center group flex justify-between truncate rounded-md border-2 bg-white p-2 text-left',
+                                    'group flex max-w-full items-center justify-between rounded-md border-2 bg-white p-2 text-left',
                                     !field.value && 'text-muted-foreground',
                                 )}
                             >
-                                {field.value
-                                    ? sortOptions.find(({ value }) => value === field.value)?.text
-                                    : 'Select Sort Option'}
-                                <TiArrowSortedDown className="size-6 group-[data-state=open]:rotate-90" />
+                                <span className="truncate">
+                                    {field.value
+                                        ? sortOptions.find(({ value }) => value === field.value)
+                                              ?.text
+                                        : 'Select Sort Option'}
+                                </span>
+                                <TiArrowSortedDown className="h-6 min-w-5 group-[data-state=open]:rotate-90" />
                             </PopoverTrigger>
                         </FormControl>
                         <PopoverContent className="w-60 p-0">
@@ -97,7 +100,7 @@ export default function Sort() {
                                     <CommandGroup>
                                         {sortOptions.map(({ text, value }) => (
                                             <CommandItem
-                                                value={value}
+                                                value={text}
                                                 key={value}
                                                 onSelect={() => {
                                                     form.setValue('sort', value);

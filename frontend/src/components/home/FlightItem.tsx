@@ -37,6 +37,9 @@ export default function FlightItem({ flight }: FligtItemProps) {
                                     ? new Date(flight.scheduleDateTime || '').toLocaleTimeString(
                                           locale,
                                           {
+                                              year: 'numeric',
+                                              month: 'long',
+                                              day: 'numeric',
                                               hour: '2-digit',
                                               minute: '2-digit',
                                           },
@@ -52,7 +55,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         </div>
                         <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col items-center">
-                            <div className="h-6 w-24 bg-airline-icon bg-contain bg-no-repeat" />
+                            <div className="bg-airline-banner h-6 w-24 bg-contain bg-no-repeat" />
                             <MdOutlineAirplanemodeActive className="mt-1 size-8 rotate-90 text-purple" />
                             <span>2h 25m (Nonstop)</span>
                         </div>
@@ -67,6 +70,9 @@ export default function FlightItem({ flight }: FligtItemProps) {
                                     ? new Date(flight.scheduleDateTime || '').toLocaleTimeString(
                                           locale,
                                           {
+                                              year: 'numeric',
+                                              month: 'long',
+                                              day: 'numeric',
                                               hour: '2-digit',
                                               minute: '2-digit',
                                           },
@@ -87,10 +93,6 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         <div className="text-xl font-bold text-purple">Price: $200</div>
                         <div className="font-medium">Round Trip</div>
                     </div>
-                    {/* <Button className="h-[4.5rem] rounded-bl-none rounded-tr-none bg-purple px-10 text-lg">
-                        Book Flight
-                    </Button> */}
-
                     {flight.id && <BookFlight id={flight.id} />}
                 </div>
             </div>

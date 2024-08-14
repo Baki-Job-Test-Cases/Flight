@@ -1,3 +1,4 @@
+import { ImSpinner9 } from 'react-icons/im';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -13,8 +14,7 @@ import NotFoundPage from './pages/NotFound';
 function App() {
     const { isLoading } = useVerify();
 
-    if (isLoading)
-        return <div className="text-5xl text-red-500">Loading...</div>;
+    if (isLoading) return <ImSpinner9 className="m-auto size-40 animate-spin" />;
 
     return (
         <>

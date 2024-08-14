@@ -11,7 +11,7 @@ export default function IncludeDelays() {
             control={form.control}
             name="includedelays"
             render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md">
+                <FormItem className="flex flex-row items-center space-y-0 rounded-md">
                     <FormControl>
                         <Checkbox
                             checked={field.value}
@@ -19,7 +19,7 @@ export default function IncludeDelays() {
                             className="size-3 rounded-full border-purple data-[state=checked]:bg-purple [&>span]:hidden"
                         />
                     </FormControl>
-                    <FormLabel className="text-md">Include Delays</FormLabel>
+                    <FormLabel className="text-md pl-3">Include Delays</FormLabel>
                     <FormDescription />
                 </FormItem>
             )}

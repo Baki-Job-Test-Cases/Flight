@@ -21,7 +21,7 @@ type BookFlightProps = {
 };
 
 export default function BookFlight({ id }: BookFlightProps) {
-    const { data: session, update } = useSession();
+    const { data: session } = useSession();
     const [addFlight, { data: result, isLoading }] = useAddFlightMutation();
     const [verify] = useVerifyMutation();
 
@@ -33,12 +33,14 @@ export default function BookFlight({ id }: BookFlightProps) {
 
             result.add && verify();
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result]);
 
     if (session?.flights.includes(id))
         return (
             <div className="flex h-[4.5rem] w-44 items-center justify-center rounded-lg rounded-bl-none rounded-tr-none bg-purple/45 text-lg text-white">
-                Booked Flight.
+                Booked
             </div>
         );
 

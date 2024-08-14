@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useFormContext } from 'react-hook-form';
 import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
+import { IoIosSearch } from 'react-icons/io';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
     FormControl,
@@ -53,6 +54,10 @@ export default function Destination() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [term]);
 
+    useEffect(() => {
+        !open && setTerm('');
+    }, [open]);
+
     const handleDestinationClick = (destination: Destination) => {
         form.setValue('route', destination.iata);
 
@@ -93,7 +98,7 @@ export default function Destination() {
                             <FormControl>
                                 <PopoverTrigger
                                     className={cn(
-                                        'flex w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
+                                        'flex w-60 gap-x-1 truncate border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                         {
                                             'rounded-l-3xl': flightDirection === 'A',
                                             'order-last rounded-r-3xl': flightDirection === 'D',
@@ -106,42 +111,43 @@ export default function Destination() {
                                     {flightDirection === 'D' && (
                                         <FaPlaneArrival className="flex h-full min-w-5 text-purple" />
                                     )}
-                                    {getDestinationResult.isFetching
-                                        ? null
-                                        : destinations.find(
-                                              (destination) => destination.iata === field.value,
-                                          )?.publicName?.english ||
-                                          (getDestinationResult.data?.success &&
-                                              getDestinationResult.data.destination.publicName
-                                                  ?.english) ||
-                                          'Select Destination'}
+                                    <span className="truncate">
+                                        {destinations.find(
+                                            (destination) => destination.iata === field.value,
+                                        )?.publicName?.english ||
+                                            (getDestinationResult.data?.success &&
+                                                getDestinationResult.data.destination.publicName
+                                                    ?.english) ||
+                                            'Select Destination'}
+                                    </span>
                                 </PopoverTrigger>
                             </FormControl>
                             <PopoverContent className="w-60 p-0">
-                                <div className="px-3 py-1">
+                                <div className="flex items-center border-2 px-2">
+                                    <IoIosSearch className="size-6" />
                                     <Input
-                                        className="focus-visible:ring-1"
+                                        className="border-none focus-visible:ring-transparent"
                                         onChange={debouncedTermChange}
                                     />
+                                </div>
+                                <div className="p-1">
                                     {term ? (
                                         <div
-                                            className="mt-2 h-[300px] w-full"
+                                            className="h-[300px] w-full p-2"
                                             onClick={() => {
                                                 if (!getDestinationResult.data?.success) return;
 
                                                 handleDestinationClick(
                                                     getDestinationResult.data.destination,
                                                 );
-
-                                                setTerm('');
                                             }}
                                         >
-                                            {getDestinationResult.isFetching
-                                                ? 'Loading...'
-                                                : getDestinationResult.data?.success
-                                                  ? getDestinationResult.data.destination.publicName
-                                                        ?.english
-                                                  : getDestinationResult.data?.error}
+                                            <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground">
+                                                {getDestinationResult.data?.success
+                                                    ? getDestinationResult.data.destination
+                                                          .publicName?.english
+                                                    : getDestinationResult.data?.error}
+                                            </div>
                                         </div>
                                     ) : (
                                         <InfiniteScroll
@@ -159,6 +165,7 @@ export default function Destination() {
                                                     <div
                                                         key={destination.iata}
                                                         role="listitem"
+                                                        className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
                                                         onClick={() =>
                                                             handleDestinationClick(destination)
                                                         }

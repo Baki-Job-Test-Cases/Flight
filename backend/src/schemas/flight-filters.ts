@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { transformDateToTimeZone } from '../utils';
 
 export const flightFiltersSchema = z
     .object({
@@ -36,8 +37,12 @@ export const flightFiltersSchema = z
             .number()
             .max(499)
             .transform((val) => val - 1),
-        fromDateTime: z.coerce.date().transform((val) => transformDate(val)),
-        toDateTime: z.coerce.date().transform((val) => transformDate(val)),
+        fromDateTime: z.coerce
+            .date()
+            .transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
+        toDateTime: z.coerce
+            .date()
+            .transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
         route: z.string().min(3).max(4),
         sort: z.enum([
             '+flightName',
@@ -77,15 +82,3 @@ export const flightFiltersSchema = z
         ]),
     })
     .partial();
-
-const transformDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
-};

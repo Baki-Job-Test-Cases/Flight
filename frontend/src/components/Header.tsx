@@ -58,12 +58,8 @@ export default function Header() {
     );
 
     return (
-        <header role="banner">
-            <nav
-                role="navigation"
-                aria-label="Main navigation"
-                className="flex py-4"
-            >
+        <header role="banner" className="mx-2 md:mx-5">
+            <nav role="navigation" aria-label="Main navigation" className="flex py-4">
                 <div className="mr-auto flex items-center text-xl font-bold uppercase">
                     <div className="relative mr-2 size-8 overflow-hidden rounded-full bg-purple">
                         <RiPlaneLine
@@ -80,18 +76,11 @@ export default function Header() {
                         return (
                             <Link
                                 key={text}
-                                className={cn(
-                                    'flex items-center gap-x-1',
-                                    className,
-                                )}
+                                className={cn('flex items-center gap-x-1', className)}
                                 {...rest}
                             >
-                                {Icon && (
-                                    <Icon className="size-4 text-purple" />
-                                )}
-                                <span className="text-sm font-medium capitalize">
-                                    {text}
-                                </span>
+                                {Icon && <Icon className="size-4 text-purple" />}
+                                <span className="text-sm font-medium capitalize">{text}</span>
                             </Link>
                         );
                     })}
@@ -104,15 +93,10 @@ export default function Header() {
                                 className="w-48"
                                 onCloseAutoFocus={(e) => e.preventDefault()}
                             >
-                                <DropdownMenuLabel>
-                                    My Account
-                                </DropdownMenuLabel>
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
-                                    <Link
-                                        to="/profile"
-                                        className="w-full cursor-default"
-                                    >
+                                    <Link to="/profile" className="w-full cursor-default">
                                         Profile
                                     </Link>
                                 </DropdownMenuItem>
@@ -131,10 +115,7 @@ export default function Header() {
                     )}
                 </div>
                 <Sheet>
-                    <SheetTrigger
-                        className="md:hidden"
-                        aria-label="Open hamburger menu"
-                    >
+                    <SheetTrigger className="md:hidden" aria-label="Open hamburger menu">
                         <FiMenu className="size-7" />
                     </SheetTrigger>
                     <SheetContent>
@@ -143,30 +124,26 @@ export default function Header() {
                                 {user ? renderedFullNameWithAvatar : ''}
                             </SheetTitle>
                             <SheetDescription className="!mt-4 flex h-full flex-col gap-y-3 text-left">
-                                {menuList.map(
-                                    ({ text, icon, className, ...rest }) => {
-                                        const Icon = icon;
+                                {menuList.map(({ text, icon, className, ...rest }) => {
+                                    const Icon = icon;
 
-                                        return (
-                                            <SheetClose key={text} asChild>
-                                                <Link
-                                                    {...rest}
-                                                    className={cn(
-                                                        'flex items-center gap-x-1 border-b-2 pb-1',
-                                                        className,
-                                                    )}
-                                                >
-                                                    {Icon && (
-                                                        <Icon className="size-4 text-purple" />
-                                                    )}
-                                                    <span className="text-sm font-medium capitalize">
-                                                        {text}
-                                                    </span>
-                                                </Link>
-                                            </SheetClose>
-                                        );
-                                    },
-                                )}
+                                    return (
+                                        <SheetClose key={text} asChild>
+                                            <Link
+                                                {...rest}
+                                                className={cn(
+                                                    'flex items-center gap-x-1 border-b-2 pb-1',
+                                                    className,
+                                                )}
+                                            >
+                                                {Icon && <Icon className="size-4 text-purple" />}
+                                                <span className="text-sm font-medium capitalize">
+                                                    {text}
+                                                </span>
+                                            </Link>
+                                        </SheetClose>
+                                    );
+                                })}
                                 {user ? (
                                     <>
                                         <SheetClose asChild>

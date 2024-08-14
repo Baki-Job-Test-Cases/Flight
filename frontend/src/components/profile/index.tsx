@@ -1,18 +1,15 @@
-import { useGetUserFlightsQuery } from '@/store';
+import FlightList from './FlightList';
+import Search from './Search';
+import Sort from './Sort';
 
 export default function Profile() {
-    const { data, isFetching, error } = useGetUserFlightsQuery();
-
-    if (isFetching) return <div>Loading</div>;
-    if (error) return <div>Error.</div>;
-
     return (
-        <div>
-            {data &&
-                'success' in data &&
-                data.success &&
-                data.flights &&
-                data.flights.map((flight) => <div key={flight.id}>{flight.id}</div>)}
+        <div className="flex flex-col gap-y-8">
+            <Search />
+            <div className="space-y-8 px-4 md:px-12">
+                <Sort />
+                <FlightList />
+            </div>
         </div>
     );
 }

@@ -130,7 +130,7 @@ export const getFlightsQuery = async (
 
     if (flights && status !== 204) {
         for (const flight of flights) {
-            await extendFlight(flight);
+            await extendFlight(flight, { destinations: true });
         }
     }
 
@@ -157,7 +157,7 @@ export const getFlightQuery = async (id: string): Promise<Flight> => {
     );
 
     if (flight && status !== 204) {
-        await extendFlight(flight);
+        await extendFlight(flight, { airline: true, destinations: true });
     }
 
     return status === 204 ? {} : flight;

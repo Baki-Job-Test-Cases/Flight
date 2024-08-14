@@ -14,7 +14,6 @@ export default function SignOut({
 }: React.ComponentPropsWithoutRef<'button'>) {
     const navigate = useNavigate();
     const { data: session, update: updateSession } = useSession();
-
     const [signout, { data: result, isLoading }] = useSignOutMutation();
 
     const handleSignOutClick = () => signout();
@@ -50,11 +49,7 @@ export default function SignOut({
                     onClick && onClick(e);
                 }}
             >
-                {isLoading ? (
-                    <ImSpinner6 className="size-6 animate-spin" />
-                ) : (
-                    'Sign Out'
-                )}
+                {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign Out'}
             </Button>
         )
     );

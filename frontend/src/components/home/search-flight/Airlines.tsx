@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { useFormContext } from 'react-hook-form';
+import { IoIosSearch } from 'react-icons/io';
+import { TiArrowSortedDown } from 'react-icons/ti';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
     FormControl,
@@ -12,7 +14,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import VisuallyHidden from '@/components/VisuallyHidden';
 import { cn } from '@/lib/utils';
 import { useLazyGetAirlineQuery, useLazyGetAirlinesQuery } from '@/store';
 import type { Airline, FlightFilters } from '@/types';
@@ -45,6 +46,10 @@ export default function Airlines() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [term]);
 
+    useEffect(() => {
+        !open && setTerm('');
+    }, [open]);
+
     const handleDestinationClick = (airline: Airline) => {
         form.setValue('airline', airline.iata);
 
@@ -65,45 +70,48 @@ export default function Airlines() {
                         <FormControl>
                             <PopoverTrigger
                                 className={cn(
-                                    'flex w-60 gap-x-1 rounded-md border-2 bg-white py-2 pl-3 pr-4 text-left font-normal',
+                                    'flex w-60 justify-between gap-x-1 rounded-md border-2 bg-white p-2 text-left font-normal',
+                                    { 'text-muted-foreground': !field.value },
                                 )}
                             >
-                                {getAirlineResult.isFetching
-                                    ? null
-                                    : airlines.find(
-                                          (airline) => airline.iata === field.value && field.value,
-                                      )?.publicName ||
-                                      (getAirlineResult.data?.success &&
-                                          getAirlineResult.data.airline.publicName) ||
-                                      'Select Airline'}
+                                <span className="truncate">
+                                    {airlines.find(
+                                        (airline) => airline.iata === field.value && field.value,
+                                    )?.publicName ||
+                                        (getAirlineResult.data?.success &&
+                                            getAirlineResult.data.airline.publicName) ||
+                                        'Select Airline'}
+                                </span>
+                                <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>
-                        <PopoverContent className="w-60 p-0">
-                            <div className="px-3 py-1">
+                        <PopoverContent className="w-60 rounded-md p-0">
+                            <div className="flex items-center border-2 px-2">
+                                <IoIosSearch className="size-6" />
                                 <Input
-                                    className="focus-visible:ring-1"
+                                    className="border-none focus-visible:ring-transparent"
                                     onChange={debouncedTermChange}
                                 />
+                            </div>
+                            <div>
                                 {term ? (
                                     <div
-                                        className="mt-2 h-[300px] w-full"
+                                        className="h-[300px] w-full p-2"
                                         onClick={() => {
                                             if (!getAirlineResult.data?.success) return;
 
                                             handleDestinationClick(getAirlineResult.data.airline);
-
-                                            setTerm('');
                                         }}
                                     >
-                                        {getAirlineResult.isFetching
-                                            ? 'Loading...'
-                                            : getAirlineResult.data?.success
-                                              ? getAirlineResult.data.airline.publicName
-                                              : getAirlineResult.data?.error}
+                                        <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground">
+                                            {getAirlineResult.data?.success
+                                                ? getAirlineResult.data.airline.publicName
+                                                : getAirlineResult.data?.error}
+                                        </div>
                                     </div>
                                 ) : (
                                     <InfiniteScroll
-                                        className="scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg mt-2 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
+                                        className="scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg mt-2 p-1 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300"
                                         height={300}
                                         dataLength={airlines.length}
                                         next={() => {
@@ -122,6 +130,7 @@ export default function Airlines() {
                                                 <div
                                                     key={airline.iata}
                                                     role="listitem"
+                                                    className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
                                                     onClick={() => handleDestinationClick(airline)}
                                                 >
                                                     {airline.publicName}
