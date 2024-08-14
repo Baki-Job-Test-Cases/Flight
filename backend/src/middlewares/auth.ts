@@ -24,6 +24,7 @@ export const authMiddleware = async (
 
         if (!accessToken || !refreshToken) throw new Error();
 
+        //Verify refresh token
         const decodedRefreshToken = jwt.verify(
             refreshToken,
             process.env.JWT_REFRESH_TOKEN_SECRET_KEY,
@@ -32,6 +33,7 @@ export const authMiddleware = async (
         if (!(decodedRefreshToken instanceof Object)) throw new Error();
 
         try {
+            //Verify access token
             const decodedAccessToken = jwt.verify(
                 accessToken,
                 process.env.JWT_ACCESS_TOKEN_SECRET_KEY,
@@ -44,6 +46,7 @@ export const authMiddleware = async (
                 decodedAccessToken.id !== decodedRefreshToken.id ||
                 decodedAccessToken.email !== decodedRefreshToken.email
             ) {
+                //Set tokens with 0 expire for response
                 clearTokenCookies(response);
 
                 return response.json({
@@ -52,11 +55,13 @@ export const authMiddleware = async (
                 });
             }
         } catch (error) {
+            //Create new access token
             createAccessTokenCookies(response, {
                 id: decodedRefreshToken.id,
                 email: decodedRefreshToken.email,
             });
         } finally {
+            //Find user at database
             const user = await db.user.findFirst({
                 where: {
                     id: decodedRefreshToken.id,
@@ -71,6 +76,7 @@ export const authMiddleware = async (
 
         next();
     } catch (error) {
+        //Set tokens with 0 expire for response
         clearTokenCookies(response);
 
         return response.json({

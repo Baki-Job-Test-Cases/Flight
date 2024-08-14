@@ -11,15 +11,19 @@ export default function FlightPagination({ isLoading }: FlightPaginationProps) {
 
     const page = Number(searchParams.get('page')) || 1;
 
+    //Set page at search params for go previous page
     const handlePreviousClick = () => {
         if (page < 2) return;
 
         searchParams.set('page', (page - 1).toString());
+
         setSearchParams(searchParams);
     };
 
+    //Set page at search params for go next page
     const handleNextClick = () => {
         searchParams.set('page', (page + 1).toString());
+
         setSearchParams(searchParams);
     };
 

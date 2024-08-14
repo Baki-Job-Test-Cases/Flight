@@ -92,7 +92,7 @@ export default function Sort() {
                                 <TiArrowSortedDown className="h-6 min-w-5 group-[data-state=open]:rotate-90" />
                             </PopoverTrigger>
                         </FormControl>
-                        <PopoverContent className="popover-content-width-same-as-its-trigger p-0">
+                        <PopoverContent className="p-0 popover-content-width-same-as-its-trigger">
                             <Command>
                                 <CommandInput placeholder="Search option..." className="h-9" />
                                 <CommandList className="scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg mt-2 p-1 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300">
@@ -103,6 +103,7 @@ export default function Sort() {
                                                 value={text}
                                                 key={value}
                                                 onSelect={() => {
+                                                    //Set form's sort value
                                                     form.setValue('sort', value);
 
                                                     setOpen(false);

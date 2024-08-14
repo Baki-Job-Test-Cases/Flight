@@ -68,6 +68,7 @@ export default function SearchFlight() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort, includeDelays, airline]);
 
+    //Flight search if the form is valid when search params change
     useEffect(() => {
         if (page && form.formState.isValid) {
             const toDateTime = form.getValues('toDateTime');

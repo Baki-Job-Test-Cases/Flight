@@ -21,6 +21,7 @@ export class AuthController {
         request: Request<{}, {}, SignUpForm>,
         response: Response<SignUpResponse>,
     ) {
+        //Validate request body
         const validatedForm = signUpSchema.safeParse(request.body);
 
         if (!validatedForm.success)
@@ -30,6 +31,7 @@ export class AuthController {
             });
 
         try {
+            //Registered user control via email
             const user = await db.user.findFirst({
                 where: { email: validatedForm.data.email },
             });
@@ -40,10 +42,12 @@ export class AuthController {
                     error: 'Another user is registered with this email..!',
                 });
 
+            //Hash pasword
             const hashedPassword = await hash(validatedForm.data.password, 15);
             const { confirmPassword, ...formWithoutConfirm } =
                 validatedForm.data;
 
+            //Insert new user
             const newUser = await db.user.create({
                 data: {
                     ...formWithoutConfirm,
@@ -53,6 +57,7 @@ export class AuthController {
             });
             const { password, ...newUserWithoutUser } = newUser;
 
+            //Create and set auth tokens to response
             createAccessTokenCookies(response, {
                 id: newUserWithoutUser.id,
                 email: newUserWithoutUser.email,
@@ -78,6 +83,7 @@ export class AuthController {
         response: Response<SignInResponse>,
     ) {
         try {
+            //Validate request body
             const validatedFormData = signInSchema.safeParse(request.body);
 
             if (!validatedFormData.success)
@@ -86,6 +92,7 @@ export class AuthController {
                     error: 'Enter valid form data ..!',
                 });
 
+            //Registered user control via email
             const user = await db.user.findFirst({
                 where: {
                     email: validatedFormData.data.email,
@@ -98,6 +105,7 @@ export class AuthController {
                     error: 'Invalid email or password..!',
                 });
 
+            //Password control
             const isPasswordMatch = await compare(
                 validatedFormData.data.password,
                 user.password,
@@ -111,6 +119,7 @@ export class AuthController {
 
             const { password, ...userWithoutPassword } = user;
 
+            //Create and set auth tokens to response
             createAccessTokenCookies(response, {
                 id: userWithoutPassword.id,
                 email: userWithoutPassword.email,
@@ -133,6 +142,7 @@ export class AuthController {
     }
     async signOut(request: Request, response: Response<SignOutResponse>) {
         try {
+            //Set tokens with 0 expire for response
             clearTokenCookies(response);
 
             return response.json({ signOut: true });
@@ -156,6 +166,7 @@ export class AuthController {
                 user: request.user,
             });
         } catch (error) {
+            //Set tokens with 0 expire
             clearTokenCookies(response);
 
             response.json({ verify: false, error: 'Something went wrong..!' });

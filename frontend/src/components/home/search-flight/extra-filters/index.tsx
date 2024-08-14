@@ -11,6 +11,7 @@ export default function ExtraFilters() {
     useEffect(() => {
         if (!filterRef.current || !wrapperRef.current) return;
 
+        //Add margin bottom to the element every time window size change
         const addBottomMargin = () => {
             if (!filterRef.current || !wrapperRef.current) return;
 

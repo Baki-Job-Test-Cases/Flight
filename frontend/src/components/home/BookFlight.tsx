@@ -26,11 +26,13 @@ export default function BookFlight({ id }: BookFlightProps) {
     const [verify] = useVerifyMutation();
 
     useEffect(() => {
+        //Show notification about book flight result
         if (result && 'add' in result) {
             toast(result.add ? 'Successfully Booked' : result.error, {
                 type: result.add ? 'success' : 'error',
             });
 
+            //If success verify and update session
             result.add && verify();
         }
 

@@ -9,6 +9,7 @@ export class DestinationController {
         response: Response<GetDestinationsResponse>,
     ) => {
         try {
+            //Validate request query
             const validatedPageNumber = z.coerce
                 .number()
                 .min(0)
@@ -22,6 +23,7 @@ export class DestinationController {
                     error: 'Enter valid query data ..!',
                 });
 
+            //Fetch destinations
             const destinations = await getDestinationsQuery(
                 validatedPageNumber.data,
             );
@@ -42,6 +44,7 @@ export class DestinationController {
         response: Response<GetDestinationResponse>,
     ) => {
         try {
+            //Validate request params
             const validatedIata = z
                 .string()
                 .length(3)
@@ -53,6 +56,7 @@ export class DestinationController {
                     error: 'Enter valid params data ..!',
                 });
 
+            //Fetch destination
             const destination = await getDestinationQuery(validatedIata.data);
 
             return response.json({

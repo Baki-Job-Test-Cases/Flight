@@ -2,7 +2,6 @@ import { IoIosArrowDown } from 'react-icons/io';
 import SeatPrices from './SeatPrices';
 import icon from '@/assets/airline-icon.png';
 import { useLocale } from '@/hooks/use-locale';
-import VisuallyHidden from '../VisuallyHidden';
 import type { Flight } from '@/types';
 
 type FlightItemProps = {
@@ -40,7 +39,7 @@ export default function FlightItem({ flight }: FlightItemProps) {
                     <div className="flex flex-wrap items-center gap-x-16 gap-y-5">
                         <div className="mr-8">
                             <p className="font-semibold">{flight.airline?.publicName}</p>
-                            <div className="text-sky flex cursor-pointer items-end gap-x-1 text-base">
+                            <div className="flex cursor-pointer items-end gap-x-1 text-base text-sky">
                                 Flight Details <IoIosArrowDown className="size-4" />
                             </div>
                         </div>

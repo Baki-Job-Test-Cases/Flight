@@ -29,12 +29,14 @@ export default function Destination() {
     const [getDestination, getDestinationResult] = useLazyGetDestinationQuery();
     const [flightDirection, route] = form.getValues(['flightDirection', 'route']);
 
+    //If route come form query, get more data about destination with iata code
     useEffect(() => {
         route && getDestination({ iata: route });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    //To fetch new data every time the page changes
     useEffect(() => {
         getDestinations({ page });
 
@@ -122,7 +124,7 @@ export default function Destination() {
                                     </span>
                                 </PopoverTrigger>
                             </FormControl>
-                            <PopoverContent className="popover-content-width-same-as-its-trigger p-0">
+                            <PopoverContent className="p-0 popover-content-width-same-as-its-trigger">
                                 <div className="flex items-center border-2 px-2">
                                     <IoIosSearch className="size-6" />
                                     <Input

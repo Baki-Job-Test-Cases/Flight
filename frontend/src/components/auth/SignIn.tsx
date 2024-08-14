@@ -35,13 +35,16 @@ export default function SignIn() {
 
     useEffect(() => {
         if (result) {
+            //Show notification about sign in result
             toast(result.signIn ? 'Successfully Signed In' : result.error, {
                 type: result.signIn ? 'success' : 'error',
             });
 
             if (result.signIn) {
+                //if sign in success redirect main page
                 navigate('/', { replace: true });
             } else {
+                //if sign in failure reset password input
                 form.resetField('password');
             }
         }
@@ -100,11 +103,7 @@ export default function SignIn() {
                             disabled={isLoading || !form.formState.isValid}
                             aria-label={isLoading ? 'Signing in' : 'Sign in'}
                         >
-                            {isLoading ? (
-                                <ImSpinner6 className="size-6 animate-spin" />
-                            ) : (
-                                'Sign In'
-                            )}
+                            {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign In'}
                         </Button>
                     </form>
                 </Form>

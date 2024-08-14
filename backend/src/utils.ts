@@ -12,6 +12,7 @@ type Keys<T extends Entity> = Extract<
     string
 >;
 
+//Create refresh token
 export const createRefreshToken = (value: TokenPayload) => {
     if (!process.env.JWT_REFRESH_TOKEN_SECRET_KEY)
         throw new Error('Missing JWT Auth Credentials..!');
@@ -21,6 +22,7 @@ export const createRefreshToken = (value: TokenPayload) => {
     });
 };
 
+//Create access token
 export const createAccessToken = (value: TokenPayload) => {
     if (!process.env.JWT_ACCESS_TOKEN_SECRET_KEY)
         throw new Error('Missing JWT Auth Credentials..!');
@@ -30,6 +32,7 @@ export const createAccessToken = (value: TokenPayload) => {
     });
 };
 
+//Set refresh token cookie to response
 export const createRefreshTokenCookie = (
     response: Response,
     data: TokenPayload,
@@ -40,6 +43,7 @@ export const createRefreshTokenCookie = (
         secure: true,
     });
 
+//Set access token cookie to response
 export const createAccessTokenCookies = (
     response: Response,
     data: TokenPayload,
@@ -54,6 +58,7 @@ export const createAccessTokenCookies = (
             maxAge: 14 * 24 * 60 * 60 * 1000,
         });
 
+//Set tokens with 0 expire for response
 export const clearTokenCookies = (response: Response) =>
     response
         .cookie('refreshToken', null, {
@@ -70,6 +75,7 @@ export const clearTokenCookies = (response: Response) =>
             maxAge: 1,
         });
 
+//Exclues properties from database query.
 export function prismaExclude<T extends Entity, K extends Keys<T>>(
     type: T,
     omit: K[],
@@ -86,6 +92,7 @@ export function prismaExclude<T extends Entity, K extends Keys<T>>(
     return result;
 }
 
+//Transform object values to string
 export const stringifyObjectValues = (
     payload: Record<string, any>,
 ): Record<string, string> =>
@@ -98,7 +105,7 @@ export const stringifyObjectValues = (
         {} as Record<string, string>,
     );
 
-// Take more data about flight with more request
+// Take more data about flight
 export const extendFlight = async (
     flight: Flight,
     options?: { airline?: boolean; destinations?: boolean },

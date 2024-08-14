@@ -14,6 +14,7 @@ export class FlightController {
         response: Response<GetFlightsResponse>,
     ) => {
         try {
+            //Validate request query
             const validatedFilters = flightFiltersSchema.safeParse(
                 request.query,
             );
@@ -24,6 +25,7 @@ export class FlightController {
                     error: 'Enter valid query data ..!',
                 });
 
+            //Fetch flights
             const flights = await getFlightsQuery(validatedFilters.data);
 
             return response.json({
@@ -43,6 +45,7 @@ export class FlightController {
         response: Response<GetFlightResponse>,
     ) => {
         try {
+            //Validate request params
             const validatedId = z.string().safeParse(request.params.id);
 
             if (!validatedId.success)
@@ -51,6 +54,7 @@ export class FlightController {
                     error: 'Enter valid param data(id) ..!',
                 });
 
+            //Get flight
             const flight = await getFlightQuery(validatedId.data);
 
             return response.json({

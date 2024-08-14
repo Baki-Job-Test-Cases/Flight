@@ -9,6 +9,7 @@ export class AirlineController {
         response: Response<GetAirlinesResponse>,
     ) => {
         try {
+            //Validate Queries
             const validatedPageNumber = z.coerce
                 .number()
                 .min(0)
@@ -22,6 +23,7 @@ export class AirlineController {
                     error: 'Enter valid query data ..!',
                 });
 
+            //Fetch Airlines
             const airlines = await getAirlinesQuery(validatedPageNumber.data);
 
             return response.json({
@@ -40,6 +42,7 @@ export class AirlineController {
         response: Response<GetAirlineResponse>,
     ) => {
         try {
+            //Validate Params
             const validatedCode = z
                 .string()
                 .min(2)
@@ -52,6 +55,7 @@ export class AirlineController {
                     error: 'Enter valid params data ..!',
                 });
 
+            //Fetch Airline
             const airline = await getAirlineQuery(validatedCode.data);
 
             return response.json({

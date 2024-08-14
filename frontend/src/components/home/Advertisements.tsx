@@ -1,7 +1,6 @@
 import { FaHotel } from 'react-icons/fa';
 import { FaCarRear, FaUmbrellaBeach } from 'react-icons/fa6';
 import { cn } from '@/lib/utils';
-import VisuallyHidden from '../VisuallyHidden';
 import type { IconType } from 'react-icons/lib';
 
 interface Advertisement {

@@ -20,10 +20,12 @@ export default function SignOut({
 
     useEffect(() => {
         if (result) {
+            //Show notification about sign out result
             toast(result.signOut ? 'Successfully Signed Out' : result.error, {
                 type: result.signOut ? 'success' : 'error',
             });
 
+            //if sign out success redirect main page and reset session state
             if (result.signOut) {
                 navigate('/', { replace: true });
 

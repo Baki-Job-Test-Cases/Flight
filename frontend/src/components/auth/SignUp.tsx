@@ -34,6 +34,8 @@ export default function SignUp() {
     });
     const [signUp, { data: result, isLoading }] = useSignUpMutation();
     const onSubmit: SubmitHandler<SignUpForm> = (data) => signUp(data);
+
+    //Bug fix for not comparing with confirm password when password changed
     const handlePasswordChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         formChange: (...event: any[]) => void,
@@ -66,13 +68,16 @@ export default function SignUp() {
 
     useEffect(() => {
         if (result) {
+            //Show notification about sign up result
             toast(result.signUp ? 'Successfully Signed Up' : result.error, {
                 type: result.signUp ? 'success' : 'error',
             });
 
+            //if sign up success redirect main page
             if (result.signUp) {
                 navigate('/', { replace: true });
             } else {
+                //if sign up failure reset password inputs
                 form.resetField('password');
                 form.resetField('confirmPassword');
             }
@@ -119,10 +124,7 @@ export default function SignUp() {
                                             type="password"
                                             {...field}
                                             onChange={(e) =>
-                                                handlePasswordChange(
-                                                    e,
-                                                    field.onChange,
-                                                )
+                                                handlePasswordChange(e, field.onChange)
                                             }
                                         />
                                     </FormControl>
@@ -179,11 +181,7 @@ export default function SignUp() {
                             disabled={isLoading || !form.formState.isValid}
                             aria-label={isLoading ? 'Signing up' : 'Sign Up'}
                         >
-                            {isLoading ? (
-                                <ImSpinner6 className="size-6 animate-spin" />
-                            ) : (
-                                'Sign Up'
-                            )}
+                            {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign Up'}
                         </Button>
                     </form>
                 </Form>

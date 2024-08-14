@@ -27,12 +27,14 @@ export default function Airlines() {
     const [page, setPage] = useState(0);
     const [term, setTerm] = useState('');
 
+    //To fetch new data every time the page changes
     useEffect(() => {
         getAirlines({ page });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
+    //If query is successful, merge the new data with the old data
     useEffect(() => {
         getAirlinesResult.data?.success &&
             setAirlines([...airlines, ...getAirlinesResult.data.airlines]);
@@ -40,16 +42,19 @@ export default function Airlines() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getAirlinesResult.data]);
 
+    //Every time the search term changes, airline search
     useEffect(() => {
         term && getAirline({ code: term });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [term]);
 
+    //Reset term after popover close
     useEffect(() => {
         !open && setTerm('');
     }, [open]);
 
+    //Set form data and close popover
     const handleDestinationClick = (airline: Airline) => {
         form.setValue('airline', airline.iata);
 
@@ -85,7 +90,7 @@ export default function Airlines() {
                                 <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>
-                        <PopoverContent className="popover-content-width-same-as-its-trigger rounded-md p-0">
+                        <PopoverContent className="rounded-md p-0 popover-content-width-same-as-its-trigger">
                             <div className="flex items-center border-2 px-2">
                                 <IoIosSearch className="size-6" />
                                 <Input

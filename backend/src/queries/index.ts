@@ -2,6 +2,7 @@ import axios from 'axios';
 import { extendFlight, stringifyObjectValues } from '../utils';
 import type { Airline, Destination, Flight, FlightFilters } from '../types';
 
+//Fetch Destinations
 export const getDestinationsQuery = async (
     page: number,
 ): Promise<Destination[] | undefined> => {
@@ -31,6 +32,7 @@ export const getDestinationsQuery = async (
     return status === 204 ? [] : destinations;
 };
 
+//Fetch Destination
 export const getDestinationQuery = async (
     iata: string,
 ): Promise<Destination> => {
@@ -55,6 +57,7 @@ export const getDestinationQuery = async (
     return status === 204 ? {} : destination;
 };
 
+//Fetch Airlines
 export const getAirlinesQuery = async (
     page: number,
 ): Promise<Airline[] | undefined> => {
@@ -82,6 +85,7 @@ export const getAirlinesQuery = async (
     return status === 204 ? [] : airlines;
 };
 
+//Fetch Airline
 export const getAirlineQuery = async (code: string): Promise<Airline> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
@@ -104,6 +108,7 @@ export const getAirlineQuery = async (code: string): Promise<Airline> => {
     return status === 204 ? {} : airline;
 };
 
+//Fetch Flights
 export const getFlightsQuery = async (
     filters: FlightFilters,
 ): Promise<Flight[] | undefined> => {
@@ -137,6 +142,7 @@ export const getFlightsQuery = async (
     return status === 204 ? [] : flights;
 };
 
+//Fetch Flight
 export const getFlightQuery = async (id: string): Promise<Flight> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||

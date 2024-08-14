@@ -18,6 +18,7 @@ export class UserController {
                     error: 'You have no authorization..!',
                 });
 
+            //Validate request body
             const validatedFlightId = z
                 .object({ id: z.string() })
                 .safeParse(request.body);
@@ -28,6 +29,7 @@ export class UserController {
                     error: 'Enter valid data..!',
                 });
 
+            //Fetch flight for control flight existence
             const flight = await getFlightQuery(validatedFlightId.data.id);
 
             if (!flight.id)
@@ -36,11 +38,14 @@ export class UserController {
                     error: 'Not exists flight..!',
                 });
 
+            //Check if the user has booked the flight
             if (user.flights.includes(flight.id))
                 return response.json({
                     add: false,
                     error: 'This flight has already been added..!',
                 });
+
+            //Check flight date
             if (
                 flight.scheduleDateTime &&
                 new Date(flight.scheduleDateTime) < new Date()
@@ -50,6 +55,7 @@ export class UserController {
                     error: 'You cant book passed flight..!',
                 });
 
+            //Update database
             await db.user.update({
                 where: { id: user.id, email: user.email },
                 data: {
@@ -86,6 +92,7 @@ export class UserController {
                     flights: [],
                 });
 
+            //Fetch Flights
             const extendedFlights = await Promise.all(
                 user.flights.map((flightId) => getFlightQuery(flightId)),
             );
