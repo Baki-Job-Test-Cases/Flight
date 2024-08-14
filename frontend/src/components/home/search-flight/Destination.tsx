@@ -122,7 +122,7 @@ export default function Destination() {
                                     </span>
                                 </PopoverTrigger>
                             </FormControl>
-                            <PopoverContent className="w-60 p-0">
+                            <PopoverContent className="popover-content-width-same-as-its-trigger p-0">
                                 <div className="flex items-center border-2 px-2">
                                     <IoIosSearch className="size-6" />
                                     <Input

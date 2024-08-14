@@ -29,7 +29,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                     <div className="flex items-center gap-x-2 max-sm:flex-col max-sm:text-center">
                         <div className="flex flex-col">
                             <div className="flex items-center gap-x-2">
-                                <LuPlaneTakeoff className="mr-px size-5" />
+                                <LuPlaneTakeoff className="mr-px size-5 text-purple" />
                                 Departure
                             </div>
                             <span className="mt-1 text-xl font-bold">
@@ -62,7 +62,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col">
                             <div className="flex items-center gap-x-2">
-                                <LuPlaneLanding className="size-5" />
+                                <LuPlaneLanding className="size-5 text-purple" />
                                 Arrival
                             </div>
                             <span className="mt-1 text-xl font-bold">

@@ -3,12 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ImSpinner9 } from 'react-icons/im';
 import { useSearchParams } from 'react-router-dom';
-import Airlines from './Airlines';
 import Destination from './Destination';
 import Direction from './Direction';
+import ExtraFilters from './extra-filters';
 import FromDate from './FromDate';
-import IncludeDelays from './IncludeDelays';
-import Sort from './Sort';
 import ToDate from './ToDate';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -115,16 +113,10 @@ export default function SearchFlight() {
                                 )}
                             </Button>
                         </div>
-                        <div className="mt-6 flex gap-6">
-                            <div className="absolute flex w-60 flex-col gap-4 rounded-xl max-lg:left-2 lg:right-0">
-                                <Sort />
-                                <Airlines />
-                                <IncludeDelays />
-                            </div>
-                        </div>
+                        <ExtraFilters />
                     </form>
                 </Form>
-                <div className="max-lg:mt-64 lg:mr-[16.5rem]">
+                <div className="lg:mr-[17.5rem]">
                     {isFetching ? (
                         <ImSpinner9 className="mx-auto size-40 animate-spin" />
                     ) : result?.success ? (

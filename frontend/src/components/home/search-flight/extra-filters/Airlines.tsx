@@ -64,13 +64,13 @@ export default function Airlines() {
             control={form.control}
             name="airline"
             render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex w-full flex-col">
                     <FormLabel className="text-lg font-semibold">Select Airline: </FormLabel>
                     <Popover open={open} onOpenChange={setOpen}>
                         <FormControl>
                             <PopoverTrigger
                                 className={cn(
-                                    'flex w-60 justify-between gap-x-1 rounded-md border-2 bg-white p-2 text-left font-normal',
+                                    'flex w-full justify-between gap-x-1 rounded-md border-2 bg-white p-2 text-left font-normal',
                                     { 'text-muted-foreground': !field.value },
                                 )}
                             >
@@ -85,7 +85,7 @@ export default function Airlines() {
                                 <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>
-                        <PopoverContent className="w-60 rounded-md p-0">
+                        <PopoverContent className="popover-content-width-same-as-its-trigger rounded-md p-0">
                             <div className="flex items-center border-2 px-2">
                                 <IoIosSearch className="size-6" />
                                 <Input
