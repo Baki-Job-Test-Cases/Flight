@@ -41,7 +41,7 @@ export default function SeatPrices() {
     const randomNumber = useMemo(() => Math.floor(Math.random() * 4), []);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col max-sm:ml-14 max-[400px]:ml-0">
             <div className="flex flex-wrap gap-3">
                 {seatSchemas[randomNumber].map((schema, index) => (
                     <div
@@ -64,7 +64,7 @@ export default function SeatPrices() {
                     </div>
                 ))}
             </div>
-            <div className="text-sky cursor-pointer text-xs">{`${randomNumber + 1} more option${randomNumber >= 1 ? 's' : ''}`}</div>
+            <div className="cursor-pointer text-xs text-sky">{`${randomNumber + 1} more option${randomNumber >= 1 ? 's' : ''}`}</div>
         </div>
     );
 }

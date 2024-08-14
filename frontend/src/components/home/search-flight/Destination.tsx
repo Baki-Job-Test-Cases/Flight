@@ -76,10 +76,10 @@ export default function Destination() {
                     <VisuallyHidden>
                         <FormLabel>Destination</FormLabel>
                     </VisuallyHidden>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="grid gap-2 sm:grid-cols-2">
                         <div
                             className={cn(
-                                'flex w-60 gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
+                                'flex w-full gap-x-1 border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                 {
                                     'rounded-l-3xl': flightDirection === 'D',
                                     'order-last rounded-r-3xl': flightDirection === 'A',
@@ -98,7 +98,7 @@ export default function Destination() {
                             <FormControl>
                                 <PopoverTrigger
                                     className={cn(
-                                        'flex w-60 gap-x-1 truncate border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
+                                        'flex w-full gap-x-1 truncate border-2 py-2 pl-3 pr-4 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                         {
                                             'rounded-l-3xl': flightDirection === 'A',
                                             'order-last rounded-r-3xl': flightDirection === 'D',

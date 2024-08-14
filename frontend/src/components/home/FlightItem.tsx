@@ -55,9 +55,9 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         </div>
                         <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col items-center">
-                            <div className="bg-airline-banner h-6 w-24 bg-contain bg-no-repeat" />
+                            <div className="h-6 w-24 bg-airline-banner bg-contain bg-no-repeat" />
                             <MdOutlineAirplanemodeActive className="mt-1 size-8 rotate-90 text-purple" />
-                            <span>2h 25m (Nonstop)</span>
+                            <span className="text-center">2h 25m (Nonstop)</span>
                         </div>
                         <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col">
@@ -71,7 +71,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                                           locale,
                                           {
                                               year: 'numeric',
-                                              month: 'long',
+                                              month: 'short',
                                               day: 'numeric',
                                               hour: '2-digit',
                                               minute: '2-digit',

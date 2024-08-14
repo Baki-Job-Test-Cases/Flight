@@ -91,11 +91,11 @@ export default function SearchFlight() {
             <section aria-describedby="bookFlight" className="relative w-full">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="rounded-2xl bg-white p-6">
+                        <div className="rounded-2xl bg-white px-2 py-6 sm:px-6">
                             <Direction />
-                            <div className="flex flex-wrap gap-x-2">
+                            <div className="grid gap-x-2 xl:grid-cols-2">
                                 <Destination />
-                                <div className="flex items-center gap-x-2 max-sm:w-full max-sm:flex-col">
+                                <div className="grid gap-x-2 sm:grid-cols-2">
                                     <FromDate />
                                     <ToDate />
                                 </div>
@@ -116,7 +116,7 @@ export default function SearchFlight() {
                         <ExtraFilters />
                     </form>
                 </Form>
-                <div className="lg:mr-[17.5rem]">
+                <div className="xl:mr-[19.5rem]">
                     {isFetching ? (
                         <ImSpinner9 className="mx-auto size-40 animate-spin" />
                     ) : result?.success ? (

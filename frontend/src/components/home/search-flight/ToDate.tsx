@@ -43,7 +43,7 @@ export default function ToDate() {
                                     <Button
                                         variant={'outline'}
                                         className={cn(
-                                            'text-md w-[240px] justify-normal rounded-r-3xl border-2 pl-1 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
+                                            'text-md w-full justify-normal rounded-r-3xl border-2 pl-1 text-left font-normal max-sm:w-full max-sm:rounded-3xl',
                                             !field.value && 'text-muted-foreground',
                                         )}
                                     >

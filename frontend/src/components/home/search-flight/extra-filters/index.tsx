@@ -29,10 +29,10 @@ export default function ExtraFilters() {
     }, []);
 
     return (
-        <div className="mt-6 flex w-fit gap-6 lg:!mb-0" ref={wrapperRef}>
+        <div className="mt-6 flex w-fit gap-6 xl:!mb-0" ref={wrapperRef}>
             <div
                 ref={filterRef}
-                className="absolute grid w-full grid-cols-1 gap-4 rounded-xl sm:grid-cols-2 lg:right-0 lg:w-64 lg:grid-cols-1"
+                className="absolute grid w-full grid-cols-1 gap-4 rounded-xl sm:grid-cols-2 xl:right-0 xl:w-72 xl:grid-cols-1"
             >
                 <Sort />
                 <Airlines />
