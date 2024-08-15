@@ -4,6 +4,7 @@ import { FiMenu } from 'react-icons/fi';
 import { RiPlaneLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import SignOut from './auth/SignOut';
+import person from '@/assets/person.png';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     DropdownMenu,
@@ -50,7 +51,7 @@ export default function Header() {
     const renderedFullNameWithAvatar = (
         <div className="flex items-center gap-1">
             <Avatar className="size-8">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={person} />
                 <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <span className="max-w-40 truncate text-sm font-medium capitalize">{`${user?.name} ${user?.surname}`}</span>
