@@ -59,7 +59,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         </div>
                         <div className="my-3 h-16 w-[2px] bg-gray-300 sm:mx-auto sm:h-[2px] sm:w-full sm:max-w-24"></div>
                         <div className="flex flex-col">
-                            <div className="flex items-center gap-x-2">
+                            <div className="flex items-center gap-x-2 max-sm:justify-center">
                                 <LuPlaneLanding className="size-5 text-purple" />
                                 Arrival
                             </div>

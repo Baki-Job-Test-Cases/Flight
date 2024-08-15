@@ -21,7 +21,8 @@ import type { FlightFilters } from '@/types';
 export default function SearchFlight() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get('page'));
-    const [getFlights, { data: result, isFetching, error }] = useLazyGetFlightsQuery();
+    const [getFlights, { data: result, isFetching, error, isUninitialized }] =
+        useLazyGetFlightsQuery();
     const validatedSearchParams = flightFiltersSchema.safeParse(Object.fromEntries(searchParams));
     const form = useForm<FlightFilters>({
         resolver: zodResolver(flightFiltersSchema),
@@ -55,15 +56,16 @@ export default function SearchFlight() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Auto search if the form is valid when extra filters change .
+    // Set or delete search params if the form is valid when extra filters change .
     useEffect(() => {
-        if (form.formState.isValid && (sort || includeDelays !== undefined || airline)) {
-            sort && searchParams.set('sort', form.getValues('sort') || '');
+        if (form.formState.isValid && !isUninitialized) {
+            sort ? searchParams.set('sort', sort) : searchParams.delete('sort');
 
-            includeDelays !== undefined &&
-                searchParams.set('includedelays', includeDelays.toString());
+            includeDelays
+                ? searchParams.set('includedelays', includeDelays.toString())
+                : searchParams.delete('includedelays');
 
-            airline && searchParams.set('airline', airline);
+            airline ? searchParams.set('airline', airline) : searchParams.delete('airline');
 
             searchParams.set('page', '1');
 

@@ -4,7 +4,7 @@ export const flightFiltersSchema = z.object({
     route: z.string().min(3).max(4).optional(),
     page: z.coerce.number().max(499).default(0),
     flightDirection: z.enum(['A', 'D']).default('A'),
-    fromDateTime: z.coerce.date().default(new Date()),
+    fromDateTime: z.coerce.date().default(new Date(new Date().setHours(0, 0, 0, 0))),
     toDateTime: z.coerce.date().optional(),
     includedelays: z.coerce.boolean().optional(),
     sort: z
