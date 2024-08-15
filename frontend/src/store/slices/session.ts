@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authApi } from '../apis/auth';
-import type { Session } from '@/types';
+import { userApi } from '../apis/user';
+import type { Session, User } from '@/types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: Session = {
@@ -12,8 +13,10 @@ const sessionSlice = createSlice({
     name: 'session',
     initialState,
     reducers: {
-        update: (_, action: PayloadAction<Session | undefined>) => {
-            return action.payload ?? initialState;
+        update: (state, action: PayloadAction<User | undefined>) => {
+            if (!action.payload) return initialState;
+
+            state.data = action.payload;
         },
     },
     extraReducers(builder) {
@@ -45,6 +48,11 @@ const sessionSlice = createSlice({
                     status: 'authenticated',
                     data: action.payload.user,
                 };
+            }
+        });
+        builder.addMatcher(userApi.endpoints.addFlight.matchFulfilled, (state, action) => {
+            if ('add' in action.payload && action.payload.add) {
+                state.data?.flights.push(action.payload.id);
             }
         });
     },

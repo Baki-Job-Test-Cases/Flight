@@ -88,7 +88,9 @@ export type GetAirlineResponse = GeneralResponse<
     | RejectWithReason<'success'>
 >;
 
-export type AddFlightResponse = GeneralResponse<{ add: true } | RejectWithReason<'add'>>;
+export type AddFlightResponse = GeneralResponse<
+    { add: true; id: string } | RejectWithReason<'add'>
+>;
 
 export type GetUserFlightsResponse = GeneralResponse<
     AuthMiddlewareResponse<{ success: true; flights: Flight[] } | RejectWithReason<'success'>>

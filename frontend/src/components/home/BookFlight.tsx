@@ -13,7 +13,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { useSession } from '@/hooks/use-session';
-import { useAddFlightMutation, useVerifyMutation } from '@/store';
+import { useAddFlightMutation } from '@/store';
 import LoadingSpinner from '../LoadingSpinner';
 
 type BookFlightProps = {
@@ -21,9 +21,8 @@ type BookFlightProps = {
 };
 
 export default function BookFlight({ id }: BookFlightProps) {
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
     const [addFlight, { data: result, isLoading, error }] = useAddFlightMutation();
-    const [verify] = useVerifyMutation();
 
     useEffect(() => {
         //Show notification about book flight result
@@ -33,12 +32,7 @@ export default function BookFlight({ id }: BookFlightProps) {
             toast(result.add ? 'Successfully Booked' : result.error, {
                 type: result.add ? 'success' : 'error',
             });
-
-            //If success verify and update session
-            result.add && verify();
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result, error]);
 
     if (session?.flights.includes(id))

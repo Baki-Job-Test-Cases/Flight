@@ -34,7 +34,7 @@ export type VerifyResponse = AuthResponse<
     | RejectWithReason<'verify'>
 >;
 
-export type AddFlightResponse = AuthResponse<{ add: true } | RejectWithReason<'add'>>;
+export type AddFlightResponse = AuthResponse<{ add: true; id: string } | RejectWithReason<'add'>>;
 
 export type GetUserFlightsResponse = AuthResponse<
     { success: true; flights: Flight[] } | RejectWithReason<'success'>

@@ -60,6 +60,7 @@ export class UserController {
 
             return response.json({
                 add: true,
+                id: flight.id,
             });
         } catch (error) {
             return response.json({
