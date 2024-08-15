@@ -124,7 +124,10 @@ export default function Destination() {
                                                     ?.english) ||
                                             'Select Destination'}
                                     </span>
-                                    <ResetFieldIcon fieldName="route" />
+                                    <ResetFieldIcon
+                                        fieldName="route"
+                                        className="Reset route field"
+                                    />
                                 </PopoverTrigger>
                             </FormControl>
                             <PopoverContent className="p-0 popover-content-width-same-as-its-trigger">

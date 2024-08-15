@@ -90,7 +90,7 @@ export default function Sort() {
                                               ?.text
                                         : 'Select Sort Option'}
                                 </span>
-                                <ResetFieldIcon fieldName="sort" />
+                                <ResetFieldIcon fieldName="sort" aria-label="Reset sort field" />
                                 <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>
