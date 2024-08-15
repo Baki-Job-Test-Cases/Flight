@@ -25,7 +25,7 @@ export default function FlightItem({ flight }: FligtItemProps) {
                         <span>{`${flight.destinations?.[0].publicName?.english} - Schiphol - ${flight.flightName}`}</span>
                     </h2>
                     <div className="flex items-center gap-x-2 max-sm:flex-col max-sm:text-center">
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col max-sm:items-center">
                             <div className="flex items-center gap-x-2">
                                 <LuPlaneTakeoff className="mr-px size-5 text-purple" />
                                 Departure
