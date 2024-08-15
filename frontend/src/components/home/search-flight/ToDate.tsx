@@ -13,10 +13,12 @@ import {
 } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import VisuallyHidden from '@/components/VisuallyHidden';
+import { useLocale } from '@/hooks/use-locale';
 import { cn } from '@/lib/utils';
 import type { FlightFilters } from '@/types';
 
 export default function ToDate() {
+    const locale = useLocale();
     const form = useFormContext<FlightFilters>();
     const [open, setOpen] = useState(false);
 
@@ -42,7 +44,15 @@ export default function ToDate() {
                                     >
                                         <FaRegCalendarAlt className="flex h-full w-8 text-purple" />
                                         {field.value
-                                            ? new Date(field.value || '').toDateString()
+                                            ? new Date(field.value || '').toLocaleDateString(
+                                                  locale,
+                                                  {
+                                                      year: 'numeric',
+                                                      month: 'short',
+                                                      day: 'numeric',
+                                                      weekday: 'long',
+                                                  },
+                                              )
                                             : 'Pick a to date'}
                                     </Button>
                                 </FormControl>
