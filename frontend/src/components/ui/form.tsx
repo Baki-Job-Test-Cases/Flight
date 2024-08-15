@@ -21,9 +21,7 @@ type FormFieldContextValue<
     name: TName;
 };
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-    {} as FormFieldContextValue,
-);
+const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
 const FormField = <
     TFieldValues extends FieldValues = FieldValues,
@@ -65,22 +63,19 @@ type FormItemContextValue = {
     id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-    {} as FormItemContextValue,
+const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
+
+const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+    ({ className, ...props }, ref) => {
+        const id = React.useId();
+
+        return (
+            <FormItemContext.Provider value={{ id }}>
+                <div ref={ref} className={cn('space-y-2', className)} {...props} />
+            </FormItemContext.Provider>
+        );
+    },
 );
-
-const FormItem = React.forwardRef<
-    HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-    const id = React.useId();
-
-    return (
-        <FormItemContext.Provider value={{ id }}>
-            <div ref={ref} className={cn('space-y-2', className)} {...props} />
-        </FormItemContext.Provider>
-    );
-});
 FormItem.displayName = 'FormItem';
 
 const FormLabel = React.forwardRef<
@@ -104,21 +99,15 @@ const FormControl = React.forwardRef<
     React.ElementRef<typeof Slot>,
     React.ComponentPropsWithoutRef<typeof Slot>
 >(({ className, ...props }, ref) => {
-    const { error, formItemId, formDescriptionId, formMessageId } =
-        useFormField();
+    const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
     return (
         <Slot
             ref={ref}
             id={formItemId}
-            className={cn(
-                error && 'border-validationError border-2 focus:border-none',
-                className,
-            )}
+            className={cn(error && 'border-2 border-validationError focus:border-none', className)}
             aria-describedby={
-                !error
-                    ? `${formDescriptionId}`
-                    : `${formDescriptionId} ${formMessageId}`
+                !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
             }
             aria-invalid={!!error}
             {...props}

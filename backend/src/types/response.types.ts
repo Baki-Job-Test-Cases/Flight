@@ -4,12 +4,8 @@ import type { Flight } from './flight.interface';
 import type { RejectWithReason } from './reject-with-reason.type';
 import type { UserWithoutPassword } from './user-without-password.type';
 
-export type GeneralResponse<T extends Record<string, any>> =
-    | T
-    | RejectWithReason<'access'>;
-export type AuthMiddlewareResponse<T extends Record<string, any>> =
-    | T
-    | RejectWithReason<'auth'>;
+export type GeneralResponse<T extends Record<string, any>> = T | RejectWithReason<'access'>;
+export type AuthMiddlewareResponse<T extends Record<string, any>> = T | RejectWithReason<'auth'>;
 
 export type SignUpResponse = GeneralResponse<
     | {
@@ -92,12 +88,8 @@ export type GetAirlineResponse = GeneralResponse<
     | RejectWithReason<'success'>
 >;
 
-export type AddFlightResponse = GeneralResponse<
-    { add: true } | RejectWithReason<'add'>
->;
+export type AddFlightResponse = GeneralResponse<{ add: true } | RejectWithReason<'add'>>;
 
 export type GetUserFlightsResponse = GeneralResponse<
-    AuthMiddlewareResponse<
-        { success: true; flights: Flight[] } | RejectWithReason<'success'>
-    >
+    AuthMiddlewareResponse<{ success: true; flights: Flight[] } | RejectWithReason<'success'>>
 >;

@@ -2,6 +2,7 @@
 const config = {
     tabWidth: 4,
     singleQuote: true,
+    printWidth: 100,
     plugins: ['@ianvs/prettier-plugin-sort-imports'],
     importOrder: [
         '<BUILTIN_MODULES>',

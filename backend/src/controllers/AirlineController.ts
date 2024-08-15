@@ -43,11 +43,7 @@ export class AirlineController {
     ) => {
         try {
             //Validate Params
-            const validatedCode = z
-                .string()
-                .min(2)
-                .max(4)
-                .safeParse(request.params.code);
+            const validatedCode = z.string().min(2).max(4).safeParse(request.params.code);
 
             if (!validatedCode.success)
                 return response.json({

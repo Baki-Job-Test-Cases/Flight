@@ -3,9 +3,7 @@ import { extendFlight, stringifyObjectValues } from '../utils';
 import type { Airline, Destination, Flight, FlightFilters } from '../types';
 
 //Fetch Destinations
-export const getDestinationsQuery = async (
-    page: number,
-): Promise<Destination[] | undefined> => {
+export const getDestinationsQuery = async (page: number): Promise<Destination[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
         !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
@@ -33,9 +31,7 @@ export const getDestinationsQuery = async (
 };
 
 //Fetch Destination
-export const getDestinationQuery = async (
-    iata: string,
-): Promise<Destination> => {
+export const getDestinationQuery = async (iata: string): Promise<Destination> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
         !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
@@ -58,9 +54,7 @@ export const getDestinationQuery = async (
 };
 
 //Fetch Airlines
-export const getAirlinesQuery = async (
-    page: number,
-): Promise<Airline[] | undefined> => {
+export const getAirlinesQuery = async (page: number): Promise<Airline[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
         !process.env.SCHIPHOL_FLIGHT_APP_KEY ||
@@ -109,9 +103,7 @@ export const getAirlineQuery = async (code: string): Promise<Airline> => {
 };
 
 //Fetch Flights
-export const getFlightsQuery = async (
-    filters: FlightFilters,
-): Promise<Flight[] | undefined> => {
+export const getFlightsQuery = async (filters: FlightFilters): Promise<Flight[] | undefined> => {
     if (
         !process.env.SCHIPHOL_FLIGHT_APP_ID ||
         !process.env.SCHIPHOL_FLIGHT_APP_KEY ||

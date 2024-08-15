@@ -24,9 +24,7 @@ export class DestinationController {
                 });
 
             //Fetch destinations
-            const destinations = await getDestinationsQuery(
-                validatedPageNumber.data,
-            );
+            const destinations = await getDestinationsQuery(validatedPageNumber.data);
 
             return response.json({
                 success: true,
@@ -45,10 +43,7 @@ export class DestinationController {
     ) => {
         try {
             //Validate request params
-            const validatedIata = z
-                .string()
-                .length(3)
-                .safeParse(request.params.iata);
+            const validatedIata = z.string().length(3).safeParse(request.params.iata);
 
             if (!validatedIata.success)
                 return response.json({

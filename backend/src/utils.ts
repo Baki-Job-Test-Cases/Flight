@@ -33,10 +33,7 @@ export const createAccessToken = (value: TokenPayload) => {
 };
 
 //Set refresh token cookie to response
-export const createRefreshTokenCookie = (
-    response: Response,
-    data: TokenPayload,
-) =>
+export const createRefreshTokenCookie = (response: Response, data: TokenPayload) =>
     response.cookie('refreshToken', createRefreshToken(data), {
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
@@ -44,10 +41,7 @@ export const createRefreshTokenCookie = (
     });
 
 //Set access token cookie to response
-export const createAccessTokenCookies = (
-    response: Response,
-    data: TokenPayload,
-) =>
+export const createAccessTokenCookies = (response: Response, data: TokenPayload) =>
     response
         .cookie('accessToken', createAccessToken(data), {
             maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -76,10 +70,7 @@ export const clearTokenCookies = (response: Response) =>
         });
 
 //Exclues properties from database query.
-export function prismaExclude<T extends Entity, K extends Keys<T>>(
-    type: T,
-    omit: K[],
-) {
+export function prismaExclude<T extends Entity, K extends Keys<T>>(type: T, omit: K[]) {
     type Key = Exclude<Keys<T>, K>;
     type TMap = Record<Key, true>;
     const result: TMap = {} as TMap;
@@ -93,9 +84,7 @@ export function prismaExclude<T extends Entity, K extends Keys<T>>(
 }
 
 //Transform object values to string
-export const stringifyObjectValues = (
-    payload: Record<string, any>,
-): Record<string, string> =>
+export const stringifyObjectValues = (payload: Record<string, any>): Record<string, string> =>
     Object.entries(payload).reduce(
         (acc, [key, value]) => {
             acc[key] = value.toString();
@@ -111,9 +100,7 @@ export const extendFlight = async (
     options?: { airline?: boolean; destinations?: boolean },
 ): Promise<void> => {
     if (options?.airline && (flight.prefixIATA || flight.prefixICAO)) {
-        const airline = await getAirlineQuery(
-            flight.prefixIATA || flight.prefixICAO || '',
-        );
+        const airline = await getAirlineQuery(flight.prefixIATA || flight.prefixICAO || '');
 
         flight.airline = airline;
     }

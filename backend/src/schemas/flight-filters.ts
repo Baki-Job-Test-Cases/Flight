@@ -8,12 +8,8 @@ export const flightFiltersSchema = z
             .number()
             .max(499)
             .transform((val) => val - 1),
-        fromDateTime: z.coerce
-            .date()
-            .transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
-        toDateTime: z.coerce
-            .date()
-            .transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
+        fromDateTime: z.coerce.date().transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
+        toDateTime: z.coerce.date().transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
         route: z.string().min(3).max(4),
         sort: z.enum([
             '+flightName',

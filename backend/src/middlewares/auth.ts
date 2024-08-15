@@ -1,11 +1,7 @@
 import jwt from 'jsonwebtoken';
 import db from '../db';
 import { AuthMiddlewareResponse } from '../types';
-import {
-    clearTokenCookies,
-    createAccessTokenCookies,
-    prismaExclude,
-} from '../utils';
+import { clearTokenCookies, createAccessTokenCookies, prismaExclude } from '../utils';
 import type { NextFunction, Request, Response } from 'express';
 
 export const authMiddleware = async (
@@ -13,10 +9,7 @@ export const authMiddleware = async (
     response: Response<AuthMiddlewareResponse<{}>>,
     next: NextFunction,
 ) => {
-    if (
-        !process.env.JWT_REFRESH_TOKEN_SECRET_KEY ||
-        !process.env.JWT_ACCESS_TOKEN_SECRET_KEY
-    )
+    if (!process.env.JWT_REFRESH_TOKEN_SECRET_KEY || !process.env.JWT_ACCESS_TOKEN_SECRET_KEY)
         throw new Error('Missing JWT Auth Credentials..!');
 
     try {

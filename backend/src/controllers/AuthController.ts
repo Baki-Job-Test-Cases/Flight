@@ -1,11 +1,7 @@
 import { compare, hash } from 'bcryptjs';
 import db from '../db';
 import { signInSchema, signUpSchema } from '../schemas';
-import {
-    clearTokenCookies,
-    createAccessTokenCookies,
-    createRefreshTokenCookie,
-} from '../utils';
+import { clearTokenCookies, createAccessTokenCookies, createRefreshTokenCookie } from '../utils';
 import type { Request, Response } from 'express';
 import type {
     SignInForm,
@@ -17,10 +13,7 @@ import type {
 } from '../types';
 
 export class AuthController {
-    async signUp(
-        request: Request<{}, {}, SignUpForm>,
-        response: Response<SignUpResponse>,
-    ) {
+    async signUp(request: Request<{}, {}, SignUpForm>, response: Response<SignUpResponse>) {
         //Validate request body
         const validatedForm = signUpSchema.safeParse(request.body);
 
@@ -44,8 +37,7 @@ export class AuthController {
 
             //Hash pasword
             const hashedPassword = await hash(validatedForm.data.password, 15);
-            const { confirmPassword, ...formWithoutConfirm } =
-                validatedForm.data;
+            const { confirmPassword, ...formWithoutConfirm } = validatedForm.data;
 
             //Insert new user
             const newUser = await db.user.create({
@@ -78,10 +70,7 @@ export class AuthController {
             });
         }
     }
-    async signIn(
-        request: Request<{}, {}, SignInForm>,
-        response: Response<SignInResponse>,
-    ) {
+    async signIn(request: Request<{}, {}, SignInForm>, response: Response<SignInResponse>) {
         try {
             //Validate request body
             const validatedFormData = signInSchema.safeParse(request.body);
@@ -106,10 +95,7 @@ export class AuthController {
                 });
 
             //Password control
-            const isPasswordMatch = await compare(
-                validatedFormData.data.password,
-                user.password,
-            );
+            const isPasswordMatch = await compare(validatedFormData.data.password, user.password);
 
             if (!isPasswordMatch)
                 return response.json({

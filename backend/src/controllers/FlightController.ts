@@ -2,11 +2,7 @@ import { type Request, type Response } from 'express';
 import * as z from 'zod';
 import { getFlightQuery, getFlightsQuery } from '../queries';
 import { flightFiltersSchema } from '../schemas';
-import type {
-    FlightFilters,
-    GetFlightResponse,
-    GetFlightsResponse,
-} from '../types';
+import type { FlightFilters, GetFlightResponse, GetFlightsResponse } from '../types';
 
 export class FlightController {
     getFlights = async (
@@ -15,9 +11,7 @@ export class FlightController {
     ) => {
         try {
             //Validate request query
-            const validatedFilters = flightFiltersSchema.safeParse(
-                request.query,
-            );
+            const validatedFilters = flightFiltersSchema.safeParse(request.query);
 
             if (!validatedFilters.success)
                 return response.json({
@@ -40,10 +34,7 @@ export class FlightController {
         }
     };
 
-    getFlight = async (
-        request: Request<{ id: string }>,
-        response: Response<GetFlightResponse>,
-    ) => {
+    getFlight = async (request: Request<{ id: string }>, response: Response<GetFlightResponse>) => {
         try {
             //Validate request params
             const validatedId = z.string().safeParse(request.params.id);

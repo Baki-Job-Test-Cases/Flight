@@ -10,7 +10,7 @@ export default function Sort() {
                     <IoIosArrowDown className="ml-1 size-4" />
                 </div>
                 <div className="flex items-center justify-center gap-x-1 text-xl">
-                    <IoIosInformationCircleOutline className="text-sky size-8" />
+                    <IoIosInformationCircleOutline className="size-8 text-sky" />
                     <span className="font-normal">Avg Fare:</span>
                     <span className="font-bold">$225</span>
                 </div>

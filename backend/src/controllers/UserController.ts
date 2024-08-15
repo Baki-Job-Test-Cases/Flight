@@ -19,9 +19,7 @@ export class UserController {
                 });
 
             //Validate request body
-            const validatedFlightId = z
-                .object({ id: z.string() })
-                .safeParse(request.body);
+            const validatedFlightId = z.object({ id: z.string() }).safeParse(request.body);
 
             if (!validatedFlightId.success)
                 return response.json({
@@ -46,10 +44,7 @@ export class UserController {
                 });
 
             //Check flight date
-            if (
-                flight.scheduleDateTime &&
-                new Date(flight.scheduleDateTime) < new Date()
-            )
+            if (flight.scheduleDateTime && new Date(flight.scheduleDateTime) < new Date())
                 return response.json({
                     add: false,
                     error: 'You cant book passed flight..!',
@@ -73,10 +68,7 @@ export class UserController {
             });
         }
     };
-    getFlights = async (
-        request: Request,
-        response: Response<GetUserFlightsResponse>,
-    ) => {
+    getFlights = async (request: Request, response: Response<GetUserFlightsResponse>) => {
         try {
             const { user } = request;
 

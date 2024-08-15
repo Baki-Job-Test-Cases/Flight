@@ -5,13 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
-import {
-    airlineRoute,
-    authRoute,
-    destinationRoute,
-    flightRoute,
-    userRoute,
-} from './routes';
+import { airlineRoute, authRoute, destinationRoute, flightRoute, userRoute } from './routes';
 import { UserWithoutPassword } from './types';
 
 declare global {

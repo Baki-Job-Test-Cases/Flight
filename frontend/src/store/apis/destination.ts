@@ -11,20 +11,14 @@ const destinationApi = createApi({
     reducerPath: 'destinationApi',
     endpoints(builder) {
         return {
-            getDestinations: builder.query<
-                GetDestinationsResponse,
-                { page: number }
-            >({
+            getDestinations: builder.query<GetDestinationsResponse, { page: number }>({
                 query: (filters) => ({
                     method: 'GET',
                     url: '/',
                     params: filters,
                 }),
             }),
-            getDestination: builder.query<
-                GetDestinationResponse,
-                { iata: string }
-            >({
+            getDestination: builder.query<GetDestinationResponse, { iata: string }>({
                 query: ({ iata }) => ({
                     method: 'GET',
                     url: `/${iata}`,
