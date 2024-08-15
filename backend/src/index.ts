@@ -16,6 +16,8 @@ declare global {
     }
 }
 
+const API_PORT = process.env.API_PORT || 8080;
+
 const app = express();
 const limiter = rateLimit({
     windowMs: 60 * 1000,
@@ -53,6 +55,6 @@ app.use('/destinations', destinationRoute);
 app.use('/airlines', airlineRoute);
 app.use('/user', userRoute);
 
-app.listen(process.env.API_PORT || 8080, () => {
-    console.log(`Server work at port ${process.env.API_PORT}`);
+app.listen(API_PORT, () => {
+    console.log(`Server work at port ${API_PORT}`);
 });
