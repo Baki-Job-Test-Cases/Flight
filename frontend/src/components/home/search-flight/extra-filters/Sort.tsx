@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import ResetFieldIcon from '../ResetFieldIcon';
 import type { FlightFilters } from '@/types';
 
 interface SortOption {
@@ -89,6 +90,7 @@ export default function Sort() {
                                               ?.text
                                         : 'Select Sort Option'}
                                 </span>
+                                <ResetFieldIcon fieldName="sort" />
                                 <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>

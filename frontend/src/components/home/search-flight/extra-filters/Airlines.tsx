@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { useLazyGetAirlineQuery, useLazyGetAirlinesQuery } from '@/store';
+import ResetFieldIcon from '../ResetFieldIcon';
 import type { Airline, FlightFilters } from '@/types';
 
 export default function Airlines() {
@@ -75,7 +76,7 @@ export default function Airlines() {
                         <FormControl>
                             <PopoverTrigger
                                 className={cn(
-                                    'flex w-full justify-between gap-x-1 rounded-md border-2 bg-white p-2 text-left font-normal',
+                                    'flex w-full items-center justify-between rounded-md border-2 bg-white p-2 text-left font-normal',
                                     { 'text-muted-foreground': !field.value },
                                 )}
                             >
@@ -87,6 +88,10 @@ export default function Airlines() {
                                             getAirlineResult.data.airline.publicName) ||
                                         'Select Airline'}
                                 </span>
+                                <ResetFieldIcon
+                                    fieldName="airline"
+                                    aria-label="Reset airline field"
+                                />
                                 <TiArrowSortedDown className="h-6 min-w-5" />
                             </PopoverTrigger>
                         </FormControl>

@@ -46,17 +46,19 @@ export default function FromDate() {
                                         )}
                                     >
                                         <FaRegCalendarAlt className="flex h-full min-w-8 text-purple" />
-                                        {field.value
-                                            ? new Date(field.value || '').toLocaleDateString(
-                                                  locale,
-                                                  {
-                                                      year: 'numeric',
-                                                      month: 'short',
-                                                      day: 'numeric',
-                                                      weekday: 'long',
-                                                  },
-                                              )
-                                            : 'Pick a from date'}
+                                        <span className="truncate">
+                                            {field.value
+                                                ? new Date(field.value || '').toLocaleDateString(
+                                                      locale,
+                                                      {
+                                                          year: 'numeric',
+                                                          month: 'short',
+                                                          day: 'numeric',
+                                                          weekday: 'long',
+                                                      },
+                                                  )
+                                                : 'Pick a from date'}
+                                        </span>
                                     </Button>
                                 </FormControl>
                             </PopoverTrigger>
@@ -68,7 +70,7 @@ export default function FromDate() {
                                         e && field.onChange(e);
 
                                         //Reset to date time every from date time change
-                                        toDateOnChange();
+                                        toDateTime && toDateOnChange();
 
                                         setOpen(false);
                                     }}

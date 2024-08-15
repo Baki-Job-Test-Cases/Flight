@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
 import { IoIosSearch } from 'react-icons/io';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ResetFieldIcon from './ResetFieldIcon';
 import {
     FormControl,
     FormDescription,
@@ -123,6 +124,7 @@ export default function Destination() {
                                                     ?.english) ||
                                             'Select Destination'}
                                     </span>
+                                    <ResetFieldIcon fieldName="route" />
                                 </PopoverTrigger>
                             </FormControl>
                             <PopoverContent className="p-0 popover-content-width-same-as-its-trigger">
