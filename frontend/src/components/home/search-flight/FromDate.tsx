@@ -55,11 +55,10 @@ export default function FromDate() {
                                     mode="single"
                                     selected={field.value}
                                     onSelect={(e) => {
-                                        if (e) {
-                                            field.onChange(e);
+                                        e && field.onChange(e);
 
-                                            toDateTime && toDateOnChange(null);
-                                        }
+                                        //Reset to date time every from date time change
+                                        toDateOnChange();
 
                                         setOpen(false);
                                     }}

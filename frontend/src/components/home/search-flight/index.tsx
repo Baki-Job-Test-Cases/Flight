@@ -22,21 +22,13 @@ export default function SearchFlight() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get('page'));
     const [getFlights, { data: result, isFetching, error }] = useLazyGetFlightsQuery();
-    const validatedSearchParams = useMemo(
-        () => flightFiltersSchema.safeParse(Object.fromEntries(searchParams)),
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [],
-    );
     const form = useForm<FlightFilters>({
         resolver: zodResolver(flightFiltersSchema),
         mode: 'all',
-        defaultValues: validatedSearchParams.success
-            ? { ...validatedSearchParams.data, flightDirection: 'A', page }
-            : {
-                  flightDirection: 'A',
-                  page: 1,
-              },
+        defaultValues: {
+            flightDirection: 'A',
+            page: 1,
+        },
     });
 
     //watch extra filters for set search params.
@@ -52,6 +44,18 @@ export default function SearchFlight() {
 
         getFlights(value);
     };
+
+    //Set search params to form
+    useEffect(() => {
+        const validatedSearchParams = flightFiltersSchema.safeParse(
+            Object.fromEntries(searchParams),
+        );
+
+        validatedSearchParams.success &&
+            form.reset({ ...validatedSearchParams.data, flightDirection: 'A', page });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Auto search if the form is valid when extra filters change .
     useEffect(() => {
