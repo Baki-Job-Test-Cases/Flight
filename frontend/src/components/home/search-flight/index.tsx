@@ -128,7 +128,7 @@ export default function SearchFlight() {
                     ) : (
                         <div className="text-3xl text-red-500">{result?.error}</div>
                     )}
-                    {!isFetching && result?.success && result.flights.length > 0 && (
+                    {!isFetching && !error && result?.success && result.flights.length > 0 && (
                         <FlightPagination isLoading={isFetching} length={result.flights.length} />
                     )}
                 </div>
