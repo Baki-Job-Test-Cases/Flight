@@ -17,6 +17,7 @@
 ### Built With
 
 -   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+-   ![React Router DOM](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 -   ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 -   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 -   ![Shadcn/UI](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)
@@ -36,7 +37,7 @@
 
 #### Backend
 
--   You need to add the following variables to environment file(.env).
+You need to add the following variables to environment file(.env).
 
         | Name                         | Type   | Example                                              |
         | ---------------------------- | ------ | ---------------------------------------------------- |
@@ -62,7 +63,7 @@
 
 #### Frontend
 
--   You need to add the following variables to environment file(.env).
+You need to add the following variables to environment file(.env).
 
         | Name         | Type   | Example               |
         | ------------ | ------ | --------------------- |

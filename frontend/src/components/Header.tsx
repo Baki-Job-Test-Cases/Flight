@@ -100,9 +100,7 @@ export default function Header() {
                                         Profile
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="mt-2 p-0">
-                                    <SignOut />
-                                </DropdownMenuItem>
+                                <SignOut className="mt-2 p-0" />
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (

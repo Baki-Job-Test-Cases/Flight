@@ -115,7 +115,8 @@ export default function Destination() {
                                     )}
                                     <span className="truncate">
                                         {destinations.find(
-                                            (destination) => destination.iata === field.value,
+                                            (destination) =>
+                                                destination.iata === field.value && field.value,
                                         )?.publicName?.english ||
                                             (getDestinationResult.data?.success &&
                                                 getDestinationResult.data.destination.publicName
@@ -159,8 +160,14 @@ export default function Destination() {
                                             next={() => {
                                                 setPage((c) => c + 1);
                                             }}
-                                            hasMore={true}
-                                            loader={<h4>Loading...</h4>}
+                                            hasMore={
+                                                !!(
+                                                    getDestinationsResult.data?.success &&
+                                                    getDestinationsResult.data.destinations.length >
+                                                        0
+                                                )
+                                            }
+                                            loader={<div className="p-2">Loading...</div>}
                                         >
                                             <div role="list">
                                                 {destinations.map((destination) => (

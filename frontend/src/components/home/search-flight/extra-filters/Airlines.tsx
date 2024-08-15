@@ -128,7 +128,7 @@ export default function Airlines() {
                                                 getAirlinesResult.data.airlines.length > 0
                                             )
                                         }
-                                        loader={<h4>Loading...</h4>}
+                                        loader={<div className="p-2">Loading...</div>}
                                     >
                                         <div role="list">
                                             {airlines.map((airline) => (

@@ -1,6 +1,6 @@
-import { ImSpinner9 } from 'react-icons/im';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import LoadingSpinner from './components/LoadingSpinner';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useVerify } from './hooks/use-verify';
 import AuthLayout from './pages/auth/Layout';
@@ -14,7 +14,7 @@ import NotFoundPage from './pages/NotFound';
 function App() {
     const { isLoading } = useVerify();
 
-    if (isLoading) return <ImSpinner9 className="m-auto size-40 animate-spin" />;
+    if (isLoading) return <LoadingSpinner className="m-auto size-40 animate-spin" />;
 
     return (
         <>

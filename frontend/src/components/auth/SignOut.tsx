@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { ImSpinner6 } from 'react-icons/im';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSession } from '@/hooks/use-session';
 import { cn } from '@/lib/utils';
 import { useSignOutMutation } from '@/store';
+import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 
 export default function SignOut({
@@ -14,13 +14,15 @@ export default function SignOut({
 }: React.ComponentPropsWithoutRef<'button'>) {
     const navigate = useNavigate();
     const { data: session, update: updateSession } = useSession();
-    const [signout, { data: result, isLoading }] = useSignOutMutation();
+    const [signout, { data: result, isLoading, error }] = useSignOutMutation();
 
     const handleSignOutClick = () => signout();
 
     useEffect(() => {
-        if (result) {
-            //Show notification about sign out result
+        //Show notification about sign out result
+        if (error) {
+            toast('Something went wrong..!', { type: 'error' });
+        } else if (result) {
             toast(result.signOut ? 'Successfully Signed Out' : result.error, {
                 type: result.signOut ? 'success' : 'error',
             });
@@ -34,7 +36,7 @@ export default function SignOut({
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [result]);
+    }, [result, error]);
 
     return (
         session && (
@@ -51,7 +53,7 @@ export default function SignOut({
                     onClick && onClick(e);
                 }}
             >
-                {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign Out'}
+                {isLoading ? <LoadingSpinner className="size-6 animate-spin" /> : 'Sign Out'}
             </Button>
         )
     );

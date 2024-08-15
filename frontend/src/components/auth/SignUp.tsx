@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ImSpinner6 } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
@@ -17,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { signUpSchema } from '@/schemas';
 import { useSignUpMutation } from '@/store';
+import LoadingSpinner from '../LoadingSpinner';
 import type { SignUpForm } from '@/types';
 
 export default function SignUp() {
@@ -32,7 +32,7 @@ export default function SignUp() {
             confirmPassword: '',
         },
     });
-    const [signUp, { data: result, isLoading }] = useSignUpMutation();
+    const [signUp, { data: result, isLoading, error }] = useSignUpMutation();
     const onSubmit: SubmitHandler<SignUpForm> = (data) => signUp(data);
 
     //Bug fix for not comparing with confirm password when password changed
@@ -67,8 +67,10 @@ export default function SignUp() {
     };
 
     useEffect(() => {
-        if (result) {
-            //Show notification about sign up result
+        //Show notification about sign up result
+        if (error) {
+            toast('Something went wrong..!', { type: 'error' });
+        } else if (result) {
             toast(result.signUp ? 'Successfully Signed Up' : result.error, {
                 type: result.signUp ? 'success' : 'error',
             });
@@ -76,15 +78,17 @@ export default function SignUp() {
             //if sign up success redirect main page
             if (result.signUp) {
                 navigate('/', { replace: true });
-            } else {
-                //if sign up failure reset password inputs
-                form.resetField('password');
-                form.resetField('confirmPassword');
             }
         }
 
+        //if sign up failure reset password inputs
+        if (error || (result && !result.signUp)) {
+            form.resetField('password');
+            form.resetField('confirmPassword');
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [result]);
+    }, [result, error]);
 
     return (
         <div className="flex h-full justify-center">
@@ -181,7 +185,11 @@ export default function SignUp() {
                             disabled={isLoading || !form.formState.isValid}
                             aria-label={isLoading ? 'Signing up' : 'Sign Up'}
                         >
-                            {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign Up'}
+                            {isLoading ? (
+                                <LoadingSpinner className="size-6 animate-spin" />
+                            ) : (
+                                'Sign Up'
+                            )}
                         </Button>
                     </form>
                 </Form>

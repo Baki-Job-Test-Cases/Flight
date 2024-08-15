@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { ImSpinner6 } from 'react-icons/im';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
@@ -17,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { signInSchema } from '@/schemas';
 import { useSignInMutation } from '@/store';
+import LoadingSpinner from '../LoadingSpinner';
 import type { SubmitHandler } from 'react-hook-form';
 import type { SignInForm } from '@/types';
 
@@ -30,12 +30,14 @@ export default function SignIn() {
             password: '',
         },
     });
-    const [signIn, { data: result, isLoading }] = useSignInMutation();
+    const [signIn, { data: result, isLoading, error }] = useSignInMutation();
     const onSubmit: SubmitHandler<SignInForm> = (data) => signIn(data);
 
     useEffect(() => {
-        if (result) {
-            //Show notification about sign in result
+        //Show notification about sign in result
+        if (error) {
+            toast('Something went wrong..!', { type: 'error' });
+        } else if (result) {
             toast(result.signIn ? 'Successfully Signed In' : result.error, {
                 type: result.signIn ? 'success' : 'error',
             });
@@ -43,14 +45,16 @@ export default function SignIn() {
             if (result.signIn) {
                 //if sign in success redirect main page
                 navigate('/', { replace: true });
-            } else {
-                //if sign in failure reset password input
-                form.resetField('password');
             }
         }
 
+        //if sign in failure reset password input
+        if (error || (result && !result.signIn)) {
+            form.resetField('password');
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [result]);
+    }, [result, error]);
 
     return (
         <div className="flex h-full justify-center">
@@ -103,7 +107,11 @@ export default function SignIn() {
                             disabled={isLoading || !form.formState.isValid}
                             aria-label={isLoading ? 'Signing in' : 'Sign in'}
                         >
-                            {isLoading ? <ImSpinner6 className="size-6 animate-spin" /> : 'Sign In'}
+                            {isLoading ? (
+                                <LoadingSpinner className="size-6 animate-spin" />
+                            ) : (
+                                'Sign In'
+                            )}
                         </Button>
                     </form>
                 </Form>

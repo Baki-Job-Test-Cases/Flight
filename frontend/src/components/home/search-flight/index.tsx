@@ -1,13 +1,13 @@
 import { useEffect, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { ImSpinner9 } from 'react-icons/im';
 import { useSearchParams } from 'react-router-dom';
 import Destination from './Destination';
 import Direction from './Direction';
 import ExtraFilters from './extra-filters';
 import FromDate from './FromDate';
 import ToDate from './ToDate';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { stringifyObjectValues } from '@/lib/utils';
@@ -21,7 +21,7 @@ import type { FlightFilters } from '@/types';
 export default function SearchFlight() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get('page'));
-    const [getFlights, { data: result, isFetching, isUninitialized }] = useLazyGetFlightsQuery();
+    const [getFlights, { data: result, isFetching, error }] = useLazyGetFlightsQuery();
     const validatedSearchParams = useMemo(
         () => flightFiltersSchema.safeParse(Object.fromEntries(searchParams)),
 
@@ -105,7 +105,7 @@ export default function SearchFlight() {
                                 aria-label={isFetching ? 'Showing Flights' : 'Show Flights'}
                             >
                                 {isFetching ? (
-                                    <ImSpinner9 className="size-full animate-spin p-px" />
+                                    <LoadingSpinner className="size-full animate-spin p-px" />
                                 ) : (
                                     'Show Flights'
                                 )}
@@ -116,14 +116,16 @@ export default function SearchFlight() {
                 </Form>
                 <div className="xl:mr-[19.5rem]">
                     {isFetching ? (
-                        <ImSpinner9 className="mx-auto size-40 animate-spin" />
+                        <LoadingSpinner className="mx-auto size-40 animate-spin" />
+                    ) : error ? (
+                        <div className="text-3xl text-red-500">Something went wrong..!</div>
                     ) : result?.success ? (
                         <FlightList flights={result.flights} />
                     ) : (
                         <div className="text-3xl text-red-500">{result?.error}</div>
                     )}
                     {!isFetching && result?.success && result.flights.length > 0 && (
-                        <FlightPagination isLoading={isFetching} />
+                        <FlightPagination isLoading={isFetching} length={result.flights.length} />
                     )}
                 </div>
             </section>

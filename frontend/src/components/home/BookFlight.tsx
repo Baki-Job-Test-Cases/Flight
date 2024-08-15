@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { ImSpinner9 } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
@@ -15,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useSession } from '@/hooks/use-session';
 import { useAddFlightMutation, useVerifyMutation } from '@/store';
+import LoadingSpinner from '../LoadingSpinner';
 
 type BookFlightProps = {
     id: string;
@@ -22,12 +22,14 @@ type BookFlightProps = {
 
 export default function BookFlight({ id }: BookFlightProps) {
     const { data: session } = useSession();
-    const [addFlight, { data: result, isLoading }] = useAddFlightMutation();
+    const [addFlight, { data: result, isLoading, error }] = useAddFlightMutation();
     const [verify] = useVerifyMutation();
 
     useEffect(() => {
         //Show notification about book flight result
-        if (result && 'add' in result) {
+        if (error) {
+            toast('Something went wrong..!', { type: 'error' });
+        } else if (result && 'add' in result) {
             toast(result.add ? 'Successfully Booked' : result.error, {
                 type: result.add ? 'success' : 'error',
             });
@@ -37,7 +39,7 @@ export default function BookFlight({ id }: BookFlightProps) {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [result]);
+    }, [result, error]);
 
     if (session?.flights.includes(id))
         return (
@@ -63,7 +65,7 @@ export default function BookFlight({ id }: BookFlightProps) {
                 aria-label={isLoading ? 'Booking flight' : 'Book flight'}
                 disabled={isLoading}
             >
-                {isLoading ? <ImSpinner9 className="size-6 animate-spin" /> : 'Book Flight'}
+                {isLoading ? <LoadingSpinner className="size-6 animate-spin" /> : 'Book Flight'}
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

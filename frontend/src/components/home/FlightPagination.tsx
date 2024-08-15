@@ -1,9 +1,10 @@
-import { ImSpinner9 } from 'react-icons/im';
 import { useSearchParams } from 'react-router-dom';
+import LoadingSpinner from '../LoadingSpinner';
 import { Button } from '../ui/button';
 
 type FlightPaginationProps = {
     isLoading?: boolean;
+    length?: number;
 };
 
 export default function FlightPagination({ isLoading }: FlightPaginationProps) {
@@ -35,15 +36,19 @@ export default function FlightPagination({ isLoading }: FlightPaginationProps) {
                 disabled={isLoading || page < 2}
                 aria-label={isLoading ? 'Loading previous page' : 'Previous Page'}
             >
-                {isLoading ? <ImSpinner9 className="size-full animate-spin p-px" /> : 'Previous'}
+                {isLoading ? (
+                    <LoadingSpinner className="size-full animate-spin p-px" />
+                ) : (
+                    'Previous'
+                )}
             </Button>
             <Button
                 className="w-24 border-2 bg-purple px-4 py-2"
                 onClick={handleNextClick}
-                disabled={isLoading}
+                disabled={isLoading || (!!length && length < 20)}
                 aria-label={isLoading ? 'Loading bext page' : 'Next page'}
             >
-                {isLoading ? <ImSpinner9 className="size-full animate-spin p-px" /> : 'Next'}
+                {isLoading ? <LoadingSpinner className="size-full animate-spin p-px" /> : 'Next'}
             </Button>
         </div>
     );
