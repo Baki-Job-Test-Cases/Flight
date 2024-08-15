@@ -1,5 +1,17 @@
 # Flight
 
+![1](https://github.com/user-attachments/assets/c86fad18-860f-4689-8394-7d8742a3f2c6)
+![2](https://github.com/user-attachments/assets/c90b3dfa-3eaa-489d-a78a-fc27f9d6b7b8)
+![3](https://github.com/user-attachments/assets/d86f8577-f148-44bb-8b1b-0771058eed1d)
+![4](https://github.com/user-attachments/assets/394a59ca-396d-4805-aca3-3dcf2fb6e151)
+![m1](https://github.com/user-attachments/assets/ffb7e4a1-6dfd-4e57-8616-231748ac8ac5)
+![m2](https://github.com/user-attachments/assets/26fd864c-8ea6-4f77-956d-63794f0e0560)
+![m3](https://github.com/user-attachments/assets/932fb6bd-e0f4-4153-87a2-7c93cd909617)
+![m4](https://github.com/user-attachments/assets/7d65a54f-7946-4f77-b3e2-08c5843733f5)
+![m5](https://github.com/user-attachments/assets/fec7cbcf-4a17-4018-8c85-c490b975a2ff)
+![m6](https://github.com/user-attachments/assets/d69cf5f4-985c-4154-b83e-88b53a502579)
+![m7](https://github.com/user-attachments/assets/ff0c0be0-34c4-4e0c-b309-398dd919c040)
+
 -   [About The Project](#about-the-project)
     -   [Built With](#built-with)
 -   [Getting Started](#getting-started)
@@ -10,9 +22,9 @@
 
 ## About The Project
 
--   The user can search for flights using the filtering options(direction, destination, date, airline, delay).
+-   The user can search for flights by date, route and direction in ascending or descending order, as well as delay status and airline filters.
 -   Users can register.
--   After logging in, the user can book the flight if the flight date has not expired and see the booked flights on the profile page.
+-   After log-in, the user can book the flight if the flight date has not expired and can see the booked flights on the profile page.
 
 ### Built With
 
