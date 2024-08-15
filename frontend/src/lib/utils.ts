@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+//Transform object values to string
 export const stringifyObjectValues = (payload: Record<string, any>): Record<string, string> =>
     Object.entries(payload).reduce(
         (acc, [key, value]) => {

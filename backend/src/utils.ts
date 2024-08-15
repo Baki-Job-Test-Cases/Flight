@@ -118,6 +118,7 @@ export const extendFlight = async (
     }
 };
 
+// Transform date to target timezone iso date string
 export const transformDateToTimeZone = (
     date: Date,
     timeZone: string = 'Europe/Amsterdam',
