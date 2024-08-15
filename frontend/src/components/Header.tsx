@@ -61,14 +61,16 @@ export default function Header() {
     return (
         <header role="banner" className="mx-2 md:mx-5">
             <nav role="navigation" aria-label="Main navigation" className="flex py-4">
-                <div className="mr-auto flex items-center text-xl font-bold uppercase">
-                    <div className="relative mr-2 size-8 overflow-hidden rounded-full bg-purple">
-                        <RiPlaneLine
-                            className="absolute -left-1 -top-px size-full rotate-90 scale-110"
-                            color="white"
-                        />
-                    </div>
-                    Plane scape
+                <div className="mr-auto text-xl font-bold uppercase">
+                    <Link to="/" className="flex items-center">
+                        <div className="relative mr-2 size-8 overflow-hidden rounded-full bg-purple">
+                            <RiPlaneLine
+                                className="absolute -left-1 -top-px size-full rotate-90 scale-110"
+                                color="white"
+                            />
+                        </div>
+                        Plane scape
+                    </Link>
                 </div>
                 <div className="flex items-center gap-x-5 max-md:hidden">
                     {menuList.map(({ text, icon, className, ...rest }) => {
