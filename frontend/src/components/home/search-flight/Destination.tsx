@@ -130,6 +130,7 @@ export default function Destination() {
                                     <IoIosSearch className="size-6" />
                                     <Input
                                         className="border-none focus-visible:ring-transparent"
+                                        placeholder="IATA code"
                                         onChange={debouncedTermChange}
                                     />
                                 </div>

@@ -7,7 +7,7 @@ type FlightPaginationProps = {
     length?: number;
 };
 
-export default function FlightPagination({ isLoading }: FlightPaginationProps) {
+export default function FlightPagination({ isLoading, length }: FlightPaginationProps) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const page = Number(searchParams.get('page')) || 1;
@@ -45,7 +45,7 @@ export default function FlightPagination({ isLoading }: FlightPaginationProps) {
             <Button
                 className="w-24 border-2 bg-purple px-4 py-2"
                 onClick={handleNextClick}
-                disabled={isLoading || (!!length && length < 20)}
+                disabled={isLoading || !!(length && length < 20)}
                 aria-label={isLoading ? 'Loading bext page' : 'Next page'}
             >
                 {isLoading ? <LoadingSpinner className="size-full animate-spin p-px" /> : 'Next'}

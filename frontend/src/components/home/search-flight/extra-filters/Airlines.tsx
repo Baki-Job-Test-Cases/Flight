@@ -95,6 +95,7 @@ export default function Airlines() {
                                 <IoIosSearch className="size-6" />
                                 <Input
                                     className="border-none focus-visible:ring-transparent"
+                                    placeholder="IATA / ICAO code"
                                     onChange={debouncedTermChange}
                                 />
                             </div>

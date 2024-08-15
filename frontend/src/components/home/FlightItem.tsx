@@ -18,16 +18,14 @@ export default function FlightItem({ flight }: FligtItemProps) {
             <div className="flex flex-col rounded-xl rounded-bl-none bg-white">
                 <div className="space-y-3 p-6 pb-4">
                     <h2
-                        className={cn('flex w-fit font-semibold', {
+                        className={cn('flex w-fit items-center font-semibold', {
                             'flex-row-reverse': flight.flightDirection === 'D',
                         })}
                     >
-                        <span>{flight.destinations?.[0].publicName?.english}</span>
-                        <span className="mx-1">-</span>
-                        <span>Schiphol</span>
+                        <span>{`${flight.destinations?.[0].publicName?.english} - Schiphol - ${flight.flightName}`}</span>
                     </h2>
                     <div className="flex items-center gap-x-2 max-sm:flex-col max-sm:text-center">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col items-center">
                             <div className="flex items-center gap-x-2">
                                 <LuPlaneTakeoff className="mr-px size-5 text-purple" />
                                 Departure

@@ -12,10 +12,7 @@ export default function FlightItem({ flight }: FlightItemProps) {
     const locale = useLocale();
 
     return (
-        <div
-            role="listitem"
-            className="flex justify-between gap-4 rounded-sm bg-white p-8 max-md:flex-col"
-        >
+        <div role="listitem" className="grid gap-4 rounded-sm bg-white p-8 md:grid-cols-2">
             <div className="flex gap-x-4 max-[400px]:flex-col">
                 <div className="mt-1 flex h-fit w-full max-w-[46px] items-center justify-center overflow-hidden rounded-full border border-gray-400 p-[2px]">
                     <img

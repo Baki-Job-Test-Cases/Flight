@@ -41,7 +41,7 @@ export default function SeatPrices() {
     const randomNumber = useMemo(() => Math.floor(Math.random() * 4), []);
 
     return (
-        <div className="flex flex-col max-sm:ml-14 max-[400px]:ml-0">
+        <div className="flex flex-col max-sm:ml-14 max-[400px]:ml-0 md:justify-self-end">
             <div className="flex flex-wrap gap-3">
                 {seatSchemas[randomNumber].map((schema, index) => (
                     <div

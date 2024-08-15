@@ -1,6 +1,6 @@
 export interface Airline {
     iata?: string;
     icao?: string;
-    nvls?: 0;
+    nvls?: number;
     publicName?: string;
 }

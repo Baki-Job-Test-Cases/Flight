@@ -11,6 +11,7 @@ export const flightFiltersSchema = z
         fromDateTime: z.coerce.date().transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
         toDateTime: z.coerce.date().transform((val) => transformDateToTimeZone(val)), //transform date to Amsterdam time
         route: z.string().min(3).max(4),
+        airline: z.string().max(3),
         sort: z.enum([
             '+flightName',
             '-flightName',
