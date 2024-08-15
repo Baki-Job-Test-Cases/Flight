@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -18,6 +18,9 @@ import type { FlightFilters } from '@/types';
 
 export default function FromDate() {
     const form = useFormContext<FlightFilters>();
+    const {
+        field: { onChange: toDateOnChange, value: toDateTime },
+    } = useController<FlightFilters>({ name: 'toDateTime' });
     const [open, setOpen] = useState(false);
 
     return (
@@ -52,7 +55,11 @@ export default function FromDate() {
                                     mode="single"
                                     selected={field.value}
                                     onSelect={(e) => {
-                                        e && field.onChange(e);
+                                        if (e) {
+                                            field.onChange(e);
+
+                                            toDateTime && toDateOnChange(null);
+                                        }
 
                                         setOpen(false);
                                     }}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -19,14 +19,6 @@ import type { FlightFilters } from '@/types';
 export default function ToDate() {
     const form = useFormContext<FlightFilters>();
     const [open, setOpen] = useState(false);
-    const watchFromDateTime = form.watch('fromDateTime');
-
-    //Resetting toDateTime value in the form when fromDateTime changes
-    useEffect(() => {
-        form.resetField('toDateTime');
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchFromDateTime]);
 
     return (
         <>
